@@ -1,0 +1,10 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="Run Local" type="Application" factoryName="Application">
+    <option name="MAIN_CLASS_NAME" value="pos.fiap.lanchonete.LanchoneteApplication" />
+    <module name="lanchonete" />
+    <option name="VM_PARAMETERS" value="-Dspring.profiles.active=local" />
+    <method v="2">
+      <option name="Make" enabled="true" />
+    </method>
+  </configuration>
+</component>
