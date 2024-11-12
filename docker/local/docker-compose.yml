@@ -1,0 +1,33 @@
+version: '3.8'
+services:
+  database:
+    image: mysql:latest
+    container_name: api-pedidos-mysql
+    command: --skip-name-resolve --host-cache-size=0
+    volumes:
+      - db_data:/var/lib/mysql
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: 123456
+      MYSQL_DATABASE: lanchonete_pedidos_db
+      MYSQL_USER: admin
+      MYSQL_PASSWORD: admin
+    healthcheck:
+      test: [ "CMD", "mysqladmin" ,"ping", "-h", "localhost" ]
+      timeout: 20s
+      retries: 10
+    ports:
+      - "3306:3306"
+    expose:
+      - 3306
+      - 33060
+    networks:
+      - spring-boot-mysql-network
+
+networks:
+  spring-boot-mysql-network:
+    driver: bridge
+
+volumes:
+  db_data:
+  db_app:
