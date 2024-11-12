@@ -1,4 +1,4 @@
-package pos.fiap.lanchonete.adapter.out.database.entities;
+package pos.fiap.pedidos.adapter.out.database.entities;
 
 import lombok.Builder;
 import lombok.Data;

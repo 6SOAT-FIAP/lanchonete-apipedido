@@ -1,4 +1,4 @@
-package pos.fiap.lanchonete.adapter.out.exception;
+package pos.fiap.pedidos.adapter.out.exception;
 
 public class PedidoNotFoundException extends RuntimeException {
     public PedidoNotFoundException(String mensagem) {

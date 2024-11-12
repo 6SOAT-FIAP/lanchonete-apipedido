@@ -9,7 +9,7 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>pos.fiap</groupId>
-    <artifactId>lanchonete</artifactId>
+    <artifactId>pedidos</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>api-pedidos</name>
     <description>Tech Challenge Pos Software Arcthitecture</description>
@@ -134,7 +134,7 @@
                             **/utils/*,
                             **/enums/*,
                             **/domain/model/*,
-                            **/LanchoneteApplication.java
+                            **/PedidosApplication.java
                         </exclude>
                     </excludes>
                 </configuration>

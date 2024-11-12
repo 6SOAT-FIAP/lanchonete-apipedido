@@ -1,4 +1,4 @@
-package pos.fiap.lanchonete.domain.enums;
+package pos.fiap.pedidos.domain.enums;
 
 import lombok.Getter;
 

@@ -1,4 +1,4 @@
-package pos.fiap.lanchonete.domain.usecase;
+package pos.fiap.pedidos.domain.usecase;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -8,10 +8,10 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Spy;
 import org.mockito.junit.jupiter.MockitoExtension;
-import pos.fiap.lanchonete.domain.model.DadosPedido;
-import pos.fiap.lanchonete.domain.model.entity.Pedido;
-import pos.fiap.lanchonete.domain.model.entity.mapper.PedidoMapper;
-import pos.fiap.lanchonete.port.PedidoDbAdapterPort;
+import pos.fiap.pedidos.domain.model.DadosPedido;
+import pos.fiap.pedidos.domain.model.entity.Pedido;
+import pos.fiap.pedidos.domain.model.entity.mapper.PedidoMapper;
+import pos.fiap.pedidos.port.PedidoDbAdapterPort;
 
 import java.util.List;
 
@@ -19,8 +19,8 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
-import static pos.fiap.lanchonete.objectmother.model.DadosPedidoObjectMother.getDadosPedidoMock;
-import static pos.fiap.lanchonete.objectmother.model.PedidoObjectMother.getPedidoMock;
+import static pos.fiap.pedidos.objectmother.model.DadosPedidoObjectMother.getDadosPedidoMock;
+import static pos.fiap.pedidos.objectmother.model.PedidoObjectMother.getPedidoMock;
 
 @ExtendWith(MockitoExtension.class)
 class PedidoUseCaseTest {

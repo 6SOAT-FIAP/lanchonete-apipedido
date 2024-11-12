@@ -1,4 +1,4 @@
-package pos.fiap.lanchonete.adapter.out.database.entities;
+package pos.fiap.pedidos.adapter.out.database.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
@@ -6,7 +6,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import pos.fiap.lanchonete.domain.enums.StatusPedidoEnum;
+import pos.fiap.pedidos.domain.enums.StatusPedidoEnum;
 
 import java.io.Serial;
 import java.io.Serializable;

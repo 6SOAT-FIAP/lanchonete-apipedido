@@ -1,4 +1,4 @@
-package pos.fiap.lanchonete.adapter.in;
+package pos.fiap.pedidos.adapter.in;
 
 import lombok.SneakyThrows;
 import org.junit.jupiter.api.Test;
@@ -8,11 +8,11 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
-import pos.fiap.lanchonete.adapter.in.api.PedidoController;
-import pos.fiap.lanchonete.adapter.in.api.dto.PedidoRequestDto;
-import pos.fiap.lanchonete.adapter.in.api.mapper.PedidoDtoMapper;
-import pos.fiap.lanchonete.domain.model.DadosPedido;
-import pos.fiap.lanchonete.port.PedidoUseCasePort;
+import pos.fiap.pedidos.adapter.in.api.PedidoController;
+import pos.fiap.pedidos.adapter.in.api.dto.PedidoRequestDto;
+import pos.fiap.pedidos.adapter.in.api.mapper.PedidoDtoMapper;
+import pos.fiap.pedidos.domain.model.DadosPedido;
+import pos.fiap.pedidos.port.PedidoUseCasePort;
 
 import java.util.List;
 
@@ -21,10 +21,10 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static pos.fiap.lanchonete.objectmother.dtos.in.PedidoRequestDtoObjectMother.getPedidoRequestDtoMock;
-import static pos.fiap.lanchonete.objectmother.dtos.in.PedidoResponseDtoObjectMother.getPedidoResponseDtoMock;
-import static pos.fiap.lanchonete.objectmother.model.DadosPedidoObjectMother.getDadosPedidoMock;
-import static pos.fiap.lanchonete.utils.JsonStringUtils.asJsonString;
+import static pos.fiap.pedidos.objectmother.dtos.in.PedidoRequestDtoObjectMother.getPedidoRequestDtoMock;
+import static pos.fiap.pedidos.objectmother.dtos.in.PedidoResponseDtoObjectMother.getPedidoResponseDtoMock;
+import static pos.fiap.pedidos.objectmother.model.DadosPedidoObjectMother.getDadosPedidoMock;
+import static pos.fiap.pedidos.utils.JsonStringUtils.asJsonString;
 
 @WebMvcTest(PedidoController.class)
 class PedidoControllerTest {

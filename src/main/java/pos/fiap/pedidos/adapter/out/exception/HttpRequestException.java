@@ -1,4 +1,4 @@
-package pos.fiap.lanchonete.adapter.out.exception;
+package pos.fiap.pedidos.adapter.out.exception;
 
 public class HttpRequestException extends RuntimeException {
     public HttpRequestException(String mensagem, Throwable causa) {

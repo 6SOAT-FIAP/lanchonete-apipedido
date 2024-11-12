@@ -1,8 +1,8 @@
-package pos.fiap.lanchonete.domain.model.entity;
+package pos.fiap.pedidos.domain.model.entity;
 
 import lombok.Builder;
 import lombok.Data;
-import pos.fiap.lanchonete.domain.enums.StatusPedidoEnum;
+import pos.fiap.pedidos.domain.enums.StatusPedidoEnum;
 
 import java.io.Serial;
 import java.io.Serializable;

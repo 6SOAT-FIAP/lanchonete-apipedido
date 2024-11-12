@@ -1,11 +1,11 @@
-package pos.fiap.lanchonete.objectmother.entities;
+package pos.fiap.pedidos.objectmother.entities;
 
-import pos.fiap.lanchonete.adapter.out.database.entities.PedidoEntity;
-import pos.fiap.lanchonete.domain.enums.StatusPedidoEnum;
+import pos.fiap.pedidos.adapter.out.database.entities.PedidoEntity;
+import pos.fiap.pedidos.domain.enums.StatusPedidoEnum;
 
 import java.util.List;
 
-import static pos.fiap.lanchonete.objectmother.entities.ProdutoEntityObjectMother.getProdutoEntityMock;
+import static pos.fiap.pedidos.objectmother.entities.ProdutoEntityObjectMother.getProdutoEntityMock;
 
 public class PedidoEntityObjectMother {
 

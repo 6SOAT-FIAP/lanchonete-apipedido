@@ -1,9 +1,9 @@
-package pos.fiap.lanchonete.adapter.out.database.entities.mapper;
+package pos.fiap.pedidos.adapter.out.database.entities.mapper;
 
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
-import pos.fiap.lanchonete.adapter.out.database.entities.PedidoEntity;
-import pos.fiap.lanchonete.domain.model.entity.Pedido;
+import pos.fiap.pedidos.adapter.out.database.entities.PedidoEntity;
+import pos.fiap.pedidos.domain.model.entity.Pedido;
 
 import java.util.List;
 import java.util.UUID;

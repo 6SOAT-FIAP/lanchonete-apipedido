@@ -1,4 +1,4 @@
-package pos.fiap.lanchonete.adapter.in.api;
+package pos.fiap.pedidos.adapter.in.api;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -10,11 +10,11 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import pos.fiap.lanchonete.adapter.in.api.dto.PedidoRequestDto;
-import pos.fiap.lanchonete.adapter.in.api.dto.PedidoResponseDto;
-import pos.fiap.lanchonete.adapter.in.api.mapper.PedidoDtoMapper;
-import pos.fiap.lanchonete.domain.enums.StatusPedidoEnum;
-import pos.fiap.lanchonete.port.PedidoUseCasePort;
+import pos.fiap.pedidos.adapter.in.api.dto.PedidoRequestDto;
+import pos.fiap.pedidos.adapter.in.api.dto.PedidoResponseDto;
+import pos.fiap.pedidos.adapter.in.api.mapper.PedidoDtoMapper;
+import pos.fiap.pedidos.domain.enums.StatusPedidoEnum;
+import pos.fiap.pedidos.port.PedidoUseCasePort;
 
 import java.util.List;
 

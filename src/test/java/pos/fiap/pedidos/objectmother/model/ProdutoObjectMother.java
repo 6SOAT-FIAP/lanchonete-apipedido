@@ -1,8 +1,8 @@
-package pos.fiap.lanchonete.objectmother.model;
+package pos.fiap.pedidos.objectmother.model;
 
-import pos.fiap.lanchonete.domain.model.entity.Produto;
+import pos.fiap.pedidos.domain.model.entity.Produto;
 
-import static pos.fiap.lanchonete.domain.enums.CategoriaEnum.ACOMPANHAMENTO;
+import static pos.fiap.pedidos.domain.enums.CategoriaEnum.ACOMPANHAMENTO;
 
 public class ProdutoObjectMother {
 

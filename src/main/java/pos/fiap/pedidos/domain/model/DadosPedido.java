@@ -1,8 +1,8 @@
-package pos.fiap.lanchonete.domain.model;
+package pos.fiap.pedidos.domain.model;
 
 import lombok.Builder;
 import lombok.Data;
-import pos.fiap.lanchonete.domain.enums.StatusPedidoEnum;
+import pos.fiap.pedidos.domain.enums.StatusPedidoEnum;
 
 import java.io.Serial;
 import java.io.Serializable;
@@ -10,7 +10,7 @@ import java.time.LocalDateTime;
 import java.util.Comparator;
 import java.util.List;
 
-import static pos.fiap.lanchonete.domain.enums.StatusPedidoEnum.*;
+import static pos.fiap.pedidos.domain.enums.StatusPedidoEnum.*;
 
 @Data
 @Builder

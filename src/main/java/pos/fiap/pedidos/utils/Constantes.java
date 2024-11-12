@@ -1,4 +1,4 @@
-package pos.fiap.lanchonete.utils;
+package pos.fiap.pedidos.utils;
 
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;

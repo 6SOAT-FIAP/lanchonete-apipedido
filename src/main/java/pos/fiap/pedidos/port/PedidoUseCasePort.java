@@ -1,6 +1,6 @@
-package pos.fiap.lanchonete.port;
+package pos.fiap.pedidos.port;
 
-import pos.fiap.lanchonete.domain.model.DadosPedido;
+import pos.fiap.pedidos.domain.model.DadosPedido;
 
 import java.util.List;
 

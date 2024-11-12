@@ -1,4 +1,4 @@
-package pos.fiap.lanchonete.adapter.config;
+package pos.fiap.pedidos.adapter.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

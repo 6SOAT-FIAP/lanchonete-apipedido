@@ -1,4 +1,4 @@
-package pos.fiap.lanchonete.adapter.out.database;
+package pos.fiap.pedidos.adapter.out.database;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -7,11 +7,11 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Spy;
 import org.mockito.junit.jupiter.MockitoExtension;
-import pos.fiap.lanchonete.adapter.out.database.entities.PedidoEntity;
-import pos.fiap.lanchonete.adapter.out.database.entities.mapper.PedidoEntityMapper;
-import pos.fiap.lanchonete.adapter.out.database.repository.PedidoRepository;
-import pos.fiap.lanchonete.adapter.out.exception.PedidoNotFoundException;
-import pos.fiap.lanchonete.domain.model.entity.Pedido;
+import pos.fiap.pedidos.adapter.out.database.entities.PedidoEntity;
+import pos.fiap.pedidos.adapter.out.database.entities.mapper.PedidoEntityMapper;
+import pos.fiap.pedidos.adapter.out.database.repository.PedidoRepository;
+import pos.fiap.pedidos.adapter.out.exception.PedidoNotFoundException;
+import pos.fiap.pedidos.domain.model.entity.Pedido;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -20,8 +20,8 @@ import java.util.Optional;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
-import static pos.fiap.lanchonete.objectmother.entities.PedidoEntityObjectMother.getPedidoEntityMock;
-import static pos.fiap.lanchonete.objectmother.model.PedidoObjectMother.getPedidoMock;
+import static pos.fiap.pedidos.objectmother.entities.PedidoEntityObjectMother.getPedidoEntityMock;
+import static pos.fiap.pedidos.objectmother.model.PedidoObjectMother.getPedidoMock;
 
 @ExtendWith(MockitoExtension.class)
 class PedidoDbAdapterTest {

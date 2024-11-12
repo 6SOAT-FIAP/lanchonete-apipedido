@@ -1,11 +1,11 @@
-package pos.fiap.lanchonete.adapter.in.api.dto;
+package pos.fiap.pedidos.adapter.in.api.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.ToString;
-import pos.fiap.lanchonete.domain.enums.CategoriaEnum;
+import pos.fiap.pedidos.domain.enums.CategoriaEnum;
 
 import java.io.Serial;
 import java.io.Serializable;

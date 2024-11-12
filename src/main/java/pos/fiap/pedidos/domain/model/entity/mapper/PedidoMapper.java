@@ -1,11 +1,11 @@
-package pos.fiap.lanchonete.domain.model.entity.mapper;
+package pos.fiap.pedidos.domain.model.entity.mapper;
 
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.Named;
 import org.mapstruct.ReportingPolicy;
-import pos.fiap.lanchonete.domain.model.DadosPedido;
-import pos.fiap.lanchonete.domain.model.entity.Pedido;
+import pos.fiap.pedidos.domain.model.DadosPedido;
+import pos.fiap.pedidos.domain.model.entity.Pedido;
 
 import java.time.LocalDateTime;
 import java.util.List;

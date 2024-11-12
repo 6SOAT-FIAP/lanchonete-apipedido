@@ -1,10 +1,10 @@
-package pos.fiap.lanchonete.objectmother.dtos.in;
+package pos.fiap.pedidos.objectmother.dtos.in;
 
-import pos.fiap.lanchonete.adapter.in.api.dto.PedidoRequestDto;
+import pos.fiap.pedidos.adapter.in.api.dto.PedidoRequestDto;
 
 import java.util.List;
 
-import static pos.fiap.lanchonete.domain.enums.CategoriaEnum.ACOMPANHAMENTO;
+import static pos.fiap.pedidos.domain.enums.CategoriaEnum.ACOMPANHAMENTO;
 
 public class PedidoRequestDtoObjectMother {
 

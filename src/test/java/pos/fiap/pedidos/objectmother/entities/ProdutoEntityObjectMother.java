@@ -1,8 +1,8 @@
-package pos.fiap.lanchonete.objectmother.entities;
+package pos.fiap.pedidos.objectmother.entities;
 
 import lombok.SneakyThrows;
-import pos.fiap.lanchonete.adapter.out.database.entities.ProdutoEntity;
-import pos.fiap.lanchonete.domain.enums.CategoriaEnum;
+import pos.fiap.pedidos.adapter.out.database.entities.ProdutoEntity;
+import pos.fiap.pedidos.domain.enums.CategoriaEnum;
 
 public class ProdutoEntityObjectMother {
 

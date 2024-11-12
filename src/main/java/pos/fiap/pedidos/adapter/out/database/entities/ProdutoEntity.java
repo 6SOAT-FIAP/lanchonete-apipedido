@@ -1,11 +1,11 @@
-package pos.fiap.lanchonete.adapter.out.database.entities;
+package pos.fiap.pedidos.adapter.out.database.entities;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import pos.fiap.lanchonete.domain.enums.CategoriaEnum;
+import pos.fiap.pedidos.domain.enums.CategoriaEnum;
 
 import java.io.Serial;
 import java.io.Serializable;

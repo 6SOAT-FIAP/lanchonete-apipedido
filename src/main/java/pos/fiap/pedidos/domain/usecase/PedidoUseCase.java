@@ -1,18 +1,18 @@
-package pos.fiap.lanchonete.domain.usecase;
+package pos.fiap.pedidos.domain.usecase;
 
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
-import pos.fiap.lanchonete.domain.model.DadosPedido;
-import pos.fiap.lanchonete.domain.model.entity.mapper.PedidoMapper;
-import pos.fiap.lanchonete.port.PedidoDbAdapterPort;
-import pos.fiap.lanchonete.port.PedidoUseCasePort;
+import pos.fiap.pedidos.domain.model.DadosPedido;
+import pos.fiap.pedidos.domain.model.entity.mapper.PedidoMapper;
+import pos.fiap.pedidos.port.PedidoDbAdapterPort;
+import pos.fiap.pedidos.port.PedidoUseCasePort;
 
 import java.time.LocalDateTime;
 import java.util.List;
 
-import static pos.fiap.lanchonete.domain.model.DadosPedido.ordenarPedidos;
+import static pos.fiap.pedidos.domain.model.DadosPedido.ordenarPedidos;
 
 @Slf4j
 @Service

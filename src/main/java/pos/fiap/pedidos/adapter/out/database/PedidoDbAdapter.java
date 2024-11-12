@@ -1,20 +1,20 @@
-package pos.fiap.lanchonete.adapter.out.database;
+package pos.fiap.pedidos.adapter.out.database;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
-import pos.fiap.lanchonete.adapter.out.database.entities.mapper.PedidoEntityMapper;
-import pos.fiap.lanchonete.adapter.out.database.repository.PedidoRepository;
-import pos.fiap.lanchonete.adapter.out.exception.PedidoNotFoundException;
-import pos.fiap.lanchonete.domain.enums.StatusPedidoEnum;
-import pos.fiap.lanchonete.domain.model.entity.Pedido;
-import pos.fiap.lanchonete.port.PedidoDbAdapterPort;
+import pos.fiap.pedidos.adapter.out.database.entities.mapper.PedidoEntityMapper;
+import pos.fiap.pedidos.adapter.out.database.repository.PedidoRepository;
+import pos.fiap.pedidos.adapter.out.exception.PedidoNotFoundException;
+import pos.fiap.pedidos.domain.enums.StatusPedidoEnum;
+import pos.fiap.pedidos.domain.model.entity.Pedido;
+import pos.fiap.pedidos.port.PedidoDbAdapterPort;
 
 import java.util.List;
 
 import static java.util.Objects.isNull;
-import static pos.fiap.lanchonete.utils.Constantes.FIM;
-import static pos.fiap.lanchonete.utils.Constantes.INICIO;
+import static pos.fiap.pedidos.utils.Constantes.FIM;
+import static pos.fiap.pedidos.utils.Constantes.INICIO;
 
 @Slf4j
 @Component
