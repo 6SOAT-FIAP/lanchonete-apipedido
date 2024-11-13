@@ -9,9 +9,9 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>pos.fiap</groupId>
-    <artifactId>pedidos</artifactId>
+    <artifactId>lanchonete-apipedido</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>api-pedidos</name>
+    <name>lanchonete-apipedido</name>
     <description>Tech Challenge Pos Software Arcthitecture</description>
     <properties>
         <java.version>17</java.version>

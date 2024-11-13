@@ -30,8 +30,8 @@ services:
       context: .
       dockerfile: Dockerfile
     #    image: 637423186279.dkr.ecr.us-east-1.amazonaws.com/lanchonete-api:latest
-    image: api-pedidos:latest
-    container_name: api-pedidos
+    image: lanchonete-apipedido:latest
+    container_name: lanchonete-apipedido
     ports:
       - "30000:8080"
     networks:

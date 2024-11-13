@@ -2,7 +2,7 @@ version: '3.8'
 services:
   database:
     image: mysql:latest
-    container_name: api-pedidos-mysql
+    container_name: lanchonete-apipedido-mysql
     command: --skip-name-resolve --host-cache-size=0
     volumes:
       - db_data:/var/lib/mysql

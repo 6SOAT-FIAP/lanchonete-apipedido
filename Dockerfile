@@ -17,11 +17,11 @@ FROM amazoncorretto:17-al2-native-jdk
 WORKDIR /app
 
 # Copie o JAR gerado a partir da etapa anterior para o contêiner
-COPY --from=builder /app/target/api-pedidos-0.0.1-SNAPSHOT.jar .
+COPY --from=builder /app/target/lanchonete-apipedido-0.0.1-SNAPSHOT.jar .
 COPY --from=builder /app/target/*.properties .
 
 # Expondo a porta que o aplicativo está ouvindo
 EXPOSE 8080
 
 # Comando para iniciar o aplicativo
-CMD ["java", "-jar", "api-pedidos-0.0.1-SNAPSHOT.jar"]
+CMD ["java", "-jar", "lanchonete-apipedido-0.0.1-SNAPSHOT.jar"]
