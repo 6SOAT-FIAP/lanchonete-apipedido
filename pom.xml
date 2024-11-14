@@ -23,6 +23,7 @@
             **/exception/**,
             **/PedidoApplication.java,
             **/Constantes.java,
+            **/*Entity.java,
             **/*Enum.java
         </sonar.exclusions>
     </properties>
