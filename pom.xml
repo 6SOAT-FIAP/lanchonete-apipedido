@@ -18,6 +18,13 @@
         <org.mapstruct.version>1.5.5.Final</org.mapstruct.version>
         <sonar.organization>6soat-fiap</sonar.organization>
         <sonar.host.url>https://sonarcloud.io</sonar.host.url>
+        <sonar.exclusions>
+            **/config/**,
+            **/exception/**,
+            **/PedidoApplication.java,
+            **/Constantes.java,
+            **/*Enum.java
+        </sonar.exclusions>
     </properties>
     <dependencyManagement>
         <dependencies>
