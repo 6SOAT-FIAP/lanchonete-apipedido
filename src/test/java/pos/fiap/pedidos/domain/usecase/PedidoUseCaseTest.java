@@ -8,6 +8,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Spy;
 import org.mockito.junit.jupiter.MockitoExtension;
+import pos.fiap.pedidos.domain.enums.StatusPedidoEnum;
 import pos.fiap.pedidos.domain.model.DadosPedido;
 import pos.fiap.pedidos.domain.model.entity.Pedido;
 import pos.fiap.pedidos.domain.model.entity.mapper.PedidoMapper;
@@ -40,7 +41,7 @@ class PedidoUseCaseTest {
     }
 
     @Test
-    void givenPedido_whenSendDadosPedido_thenSucceed() {
+    void givenPedido_whenRealizar_thenSucceed() {
         when(pedidoDbAdapterPort.cadastrarPedido(any(Pedido.class))).thenReturn(pedido);
 
         var dadosPedido = pedidoUseCase.realizar(getDadosPedidoMock());
@@ -53,7 +54,7 @@ class PedidoUseCaseTest {
     }
 
     @Test
-    void givenPedidos_whenGetAll_thenSucceed() {
+    void givenPedidos_whenListar_thenSucceed() {
         when(pedidoDbAdapterPort.buscarPedidos()).thenReturn(List.of(pedido));
 
         var pedidos = pedidoUseCase.listar();
@@ -62,5 +63,32 @@ class PedidoUseCaseTest {
         verify(pedidoMapper, times(1)).toListDadosPedido(anyList());
         assertNotNull(pedidos);
         assertFalse(pedidos.isEmpty());
+    }
+
+    @Test
+    void givenPedidos_whenObterPedidoPorId_thenSucceed() {
+        when(pedidoDbAdapterPort.obterPedidoPorId(anyString())).thenReturn(pedido);
+
+        var pedidos = pedidoUseCase.obterPedidoPorId(pedido.getNumeroPedido());
+
+        verify(pedidoDbAdapterPort, times(1)).obterPedidoPorId(anyString());
+        verify(pedidoMapper, times(1)).toDadosPedido(any(Pedido.class));
+        assertNotNull(pedidos);
+    }
+
+    @Test
+    void givenPedidos_whenAtualizar_thenSucceed() {
+        var pedidoAtualizado = pedido;
+        pedidoAtualizado.setStatusPedido(StatusPedidoEnum.PRONTO);
+
+        when(pedidoDbAdapterPort.obterPedidoPorId(anyString())).thenReturn(pedido);
+        when(pedidoDbAdapterPort.cadastrarPedido(any(Pedido.class))).thenReturn(pedidoAtualizado);
+
+        var pedidos = pedidoUseCase.atualizar(pedido.getNumeroPedido(), getDadosPedidoMock());
+
+        verify(pedidoDbAdapterPort, times(1)).obterPedidoPorId(anyString());
+        verify(pedidoDbAdapterPort, times(1)).cadastrarPedido(any(Pedido.class));
+        verify(pedidoMapper, times(1)).toDadosPedido(any(Pedido.class));
+        assertNotNull(pedidos);
     }
 }
