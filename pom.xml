@@ -24,7 +24,8 @@
             **/PedidoApplication.java,
             **/Constantes.java,
             **/*Entity.java,
-            **/*Enum.java
+            **/*Enum.java,
+            **/pom.xml
         </sonar.exclusions>
     </properties>
     <dependencyManagement>
@@ -140,13 +141,29 @@
                 <configuration>
                     <excludes>
                         <exclude>
-                            **/config/*,
-                            **/utils/*,
-                            **/enums/*,
-                            **/domain/model/*,
-                            **/PedidosApplication.java
+                            **/config/**,
+                            **/exception/**,
+                            **/PedidoApplication.java,
+                            **/Constantes.java,
+                            **/*Entity.java,
+                            **/*Enum.java,
+                            **/pom.xml
                         </exclude>
                     </excludes>
+                    <rules>
+                        <rule>
+                            <element>CLASS</element>
+                            <limits>
+                                <limit>
+                                    <counter>LINE</counter>
+                                    <value>COVEREDRATIO</value>
+                                    <minimum>0.80</minimum>
+                                </limit>
+                            </limits>
+                        </rule>
+                    </rules>
+                    <dataFile>target/jacoco.exec</dataFile>
+                    <outputDirectory>target/site/jacoco</outputDirectory>
                 </configuration>
                 <executions>
                     <execution>
