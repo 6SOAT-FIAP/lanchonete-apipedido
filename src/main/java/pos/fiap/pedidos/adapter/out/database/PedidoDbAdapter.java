@@ -10,6 +10,7 @@ import pos.fiap.pedidos.domain.enums.StatusPedidoEnum;
 import pos.fiap.pedidos.domain.model.entity.Pedido;
 import pos.fiap.pedidos.port.PedidoDbAdapterPort;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static java.util.Objects.isNull;
@@ -46,7 +47,7 @@ public class PedidoDbAdapter implements PedidoDbAdapterPort {
     public List<Pedido> buscarPedidos() {
         log.info(String.format(STRING_LOG_FORMAT, SERVICE_NAME, BUSCAR_PEDIDOS_METHOD_NAME, INICIO), "pedidos");
 
-        var entity = pedidoRepository.findAll();
+        var entity = new ArrayList<>(pedidoRepository.findAll());
 
         entity.removeIf(pedido ->
                 isNull(pedido.getStatusPedido()) || pedido.getStatusPedido() == StatusPedidoEnum.FINALIZADO);
