@@ -13,14 +13,13 @@ import pos.fiap.pedidos.adapter.out.database.repository.PedidoRepository;
 import pos.fiap.pedidos.adapter.out.exception.PedidoNotFoundException;
 import pos.fiap.pedidos.domain.model.entity.Pedido;
 
-import java.util.ArrayList;
-import java.util.Collections;
+import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
-import static pos.fiap.pedidos.objectmother.entities.PedidoEntityObjectMother.getPedidoEntityMock;
+import static pos.fiap.pedidos.objectmother.entities.PedidoEntityObjectMother.*;
 import static pos.fiap.pedidos.objectmother.model.PedidoObjectMother.getPedidoMock;
 
 @ExtendWith(MockitoExtension.class)
@@ -47,7 +46,9 @@ class PedidoDbAdapterTest {
 
     @Test
     void testBuscarPedidos_Success() {
-        when(pedidoRepository.findAll()).thenReturn(new ArrayList<>(Collections.singleton(getPedidoEntityMock())));
+        when(pedidoRepository.findAll())
+                .thenReturn(List.of(getPedidoEntityMock(), getPedidoEntityStatusFinalizadoMock(),
+                        getPedidoEntityStatusNullMock()));
 
         var pedido = pedidoDbAdapter.buscarPedidos();
 

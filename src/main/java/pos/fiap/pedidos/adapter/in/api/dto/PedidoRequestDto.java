@@ -3,8 +3,7 @@ package pos.fiap.pedidos.adapter.in.api.dto;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Builder;
-import lombok.Getter;
-import lombok.ToString;
+import lombok.Data;
 import pos.fiap.pedidos.domain.enums.CategoriaEnum;
 import pos.fiap.pedidos.domain.enums.StatusPedidoEnum;
 
@@ -13,9 +12,8 @@ import java.io.Serializable;
 import java.net.URL;
 import java.util.List;
 
-@Getter
+@Data
 @Builder
-@ToString
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class PedidoRequestDto implements Serializable {
     @Serial
@@ -25,9 +23,8 @@ public class PedidoRequestDto implements Serializable {
     private List<WrapperProdutoRequestDto> itens;
 
 
-    @Getter
+    @Data
     @Builder
-    @ToString
     @JsonIgnoreProperties(ignoreUnknown = true)
     @JsonInclude(JsonInclude.Include.NON_NULL)
     public static class WrapperProdutoRequestDto implements Serializable {

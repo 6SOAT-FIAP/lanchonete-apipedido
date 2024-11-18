@@ -18,4 +18,23 @@ public class PedidoEntityObjectMother {
                 .statusPedido(StatusPedidoEnum.RECEBIDO)
                 .build();
     }
+
+    public static PedidoEntity getPedidoEntityStatusFinalizadoMock() {
+        return PedidoEntity.builder()
+                .numeroPedido("12342")
+                .cpfCliente("12345678")
+                .valorTotal(Double.valueOf("100.00"))
+                .itens(List.of(getProdutoEntityMock()))
+                .statusPedido(StatusPedidoEnum.FINALIZADO)
+                .build();
+    }
+
+    public static PedidoEntity getPedidoEntityStatusNullMock() {
+        return PedidoEntity.builder()
+                .numeroPedido("12342")
+                .cpfCliente("12345678")
+                .valorTotal(Double.valueOf("100.00"))
+                .itens(List.of(getProdutoEntityMock()))
+                .build();
+    }
 }
