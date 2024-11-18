@@ -1,0 +1,63 @@
+version: '3.8'
+
+services:
+  database:
+    image: mysql:latest
+    container_name: lanchonete-pedidos-mysql
+    command: --skip-name-resolve --host-cache-size=0
+    volumes:
+      - db_data:/var/lib/mysql
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: 123456
+      MYSQL_DATABASE: lanchonete_pedidos_db
+      MYSQL_USER: admin
+      MYSQL_PASSWORD: admin
+    healthcheck:
+      test: [ "CMD", "mysqladmin" ,"ping", "-h", "localhost" ]
+      timeout: 20s
+      retries: 10
+    ports:
+      - "3306:3306"
+    expose:
+      - 3306
+      - 33060
+    networks:
+      - spring-boot-mysql-network
+
+  application:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    #    image: 637423186279.dkr.ecr.us-east-1.amazonaws.com/lanchonete-api:latest
+    image: lanchonete-apipedido:latest
+    container_name: lanchonete-apipedido
+    ports:
+      - "30000:8080"
+    networks:
+      - spring-boot-mysql-network
+    depends_on:
+      database:
+        condition: service_healthy
+    environment:
+      - SPRING_PROFILES_ACTIVE=dev
+      - SPRING_DATASOURCE_URL=jdbc:mysql://rds-lanchonete-api.ce4gi78vrznv.sa-east-1.rds.amazonaws.com:3306/lanchonete_pedidos_db?createDatabaseIfNotExist=true&serverTimezone=America/Sao_Paulo&useSSl=false
+      - SPRING_DATASOURCE_USERNAME=root
+      - SPRING_DATASOURCE_PASSWORD=123456
+    volumes:
+      - db_app:/var/lib/app
+    command: [ "java", "-jar", "/app/lanchonete-0.0.1-SNAPSHOT.jar" ]
+    healthcheck:
+      test: curl --silent http://localhost:30000 >/dev/null; if [[ $$? == 52 ]]; then echo 0; else echo 1; fi
+      interval: 1m
+      timeout: 3s
+      retries: 3
+      start_period: 1m
+
+networks:
+  spring-boot-mysql-network:
+    driver: bridge
+
+volumes:
+  db_data:
+  db_app:
