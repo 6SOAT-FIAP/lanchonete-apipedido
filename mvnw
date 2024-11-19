@@ -21,11 +21,11 @@
 # ----------------------------------------------------------------------------
 # Apache Maven Wrapper startup batch script, version 3.2.0
 #
-# Required ENV vars:
+# Required ENV vars.tf:
 # ------------------
 #   JAVA_HOME - location of a JDK home dir
 #
-# Optional ENV vars
+# Optional ENV vars.tf
 # -----------------
 #   MAVEN_OPTS - parameters passed to the Java VM when running Maven
 #     e.g. to debug Maven itself, use
