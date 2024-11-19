@@ -4,7 +4,7 @@ on:
   push:
     branches:
       - 'main'
-      - 'fature/*'
+      - 'feature/*'
   workflow_dispatch:
 
 env:
