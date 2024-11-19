@@ -1,10 +1,6 @@
 name: Create Terraform Plan for infra
 
 on:
-  push:
-    branches:
-      - 'main'
-      - 'feature/*'
   workflow_dispatch:
 
 env:
