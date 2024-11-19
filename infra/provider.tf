@@ -16,7 +16,7 @@ terraform {
   backend "s3" {
     bucket = "lanchonete-bucket"
     key    = "lanchonete-bucket/infra.tfstate"
-    region = var.aws_region
+    region = "sa-east-1"
   }
 }
 
