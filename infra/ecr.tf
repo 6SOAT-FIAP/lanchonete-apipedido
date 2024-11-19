@@ -73,13 +73,8 @@ resource "null_resource" "push_image_apipedido_to_ecr" {
   provisioner "local-exec" {
     command     = <<-EOT
       aws ecr get-login-password --region ${var.aws_region} | docker login --username AWS --password-stdin ${aws_ecr_repository.repository_apipedido.repository_url}
-      mkdir -p ./temp_repo_apipedido  # Cria diretório temporário exclusivo para o pedido
-      cd ./temp_repo_apipedido || exit 1
-      git clone https://github.com/6SOAT-FIAP/lanchonete-apipedido ./lanchonete-apipedido-repo
-      cd ./lanchonete-apipedido-repo || exit 1
       docker build -t ${aws_ecr_repository.repository_apipedido.repository_url}:latest .
       docker push ${aws_ecr_repository.repository_apipedido.repository_url}:latest
-      rm -rf ./temp_repo_order
     EOT
     working_dir = path.module
   }
