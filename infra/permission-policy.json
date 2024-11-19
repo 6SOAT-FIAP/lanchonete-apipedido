@@ -9,7 +9,7 @@
         "ecr:GetDownloadUrlForLayer"
       ],
       "Resource": [
-        "arn:aws:ecr:us-east-1:578360598759:repository/lanchonete-apipedido"
+        "arn:aws:ecr:sa-east-1:578360598759:repository/lanchonete-apipedido"
       ]
     }
   ]

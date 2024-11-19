@@ -67,7 +67,7 @@ resource "aws_iam_role_policy" "ecs_role_policy" {
           "execute-api:Invoke"
         ]
         Effect   = "Allow"
-        Resource = "arn:aws:execute-api:us-east-1:${data.aws_caller_identity.current.account_id}:${aws_api_gateway_rest_api.rest_api.id}/prod/GET/*"
+        Resource = "arn:aws:execute-api:${var.aws_region}:${data.aws_caller_identity.current.account_id}:${aws_api_gateway_rest_api.rest_api.id}/api/v1/pedido/*"
       }
     ]
   })
@@ -87,7 +87,7 @@ resource "aws_api_gateway_rest_api_policy" "api_gateway_policy" {
           "execute-api:Invoke"
         ]
         Effect   = "Allow"
-        Resource = "arn:aws:execute-api:us-east-1:${data.aws_caller_identity.current.account_id}:${aws_api_gateway_rest_api.rest_api.id}/prod/GET/*"
+        Resource = "arn:aws:execute-api:${var.aws_region}:${data.aws_caller_identity.current.account_id}:${aws_api_gateway_rest_api.rest_api.id}/api/v1/pedido/*"
       }
     ]
   })

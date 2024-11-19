@@ -37,7 +37,7 @@ variable "tags" {
 }
 
 variable "aws_region" {
-  default = "us-east-1"
+  default = "sa-east-1"
 }
 
 variable "aws_access_key" {
