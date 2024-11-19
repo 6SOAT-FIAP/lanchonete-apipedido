@@ -29,7 +29,7 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    #    image: 637423186279.dkr.ecr.us-east-1.amazonaws.com/lanchonete-api:latest
+    #    image: 578360598759.dkr.ecr.us-east-1.amazonaws.com/lanchonete-api:latest
     image: lanchonete-apipedido:latest
     container_name: lanchonete-apipedido
     ports:
