@@ -15,7 +15,7 @@ resource "aws_iam_role_policy" "lanchonete_role_policy_for_ecs" {
           "ecr:GetDownloadUrlForLayer",
         ]
         Effect   = "Allow"
-        Resource = "arn:aws:ecr:us-east-1:${data.aws_caller_identity.current.account_id}:repository/lanchonete-apipedido"
+        Resource = "arn:aws:ecr:${var.aws_region}:${data.aws_caller_identity.current.account_id}:repository/lanchonete-apipedido"
       },
       {
         Action = [
@@ -25,14 +25,14 @@ resource "aws_iam_role_policy" "lanchonete_role_policy_for_ecs" {
           "ecr:GetDownloadUrlForLayer",
         ]
         Effect   = "Allow"
-        Resource = "arn:aws:ecr:us-east-1:${data.aws_caller_identity.current.account_id}:repository/lanchonete-apipedido"
+        Resource = "arn:aws:ecr:${var.aws_region}:${data.aws_caller_identity.current.account_id}:repository/lanchonete-apipedido"
       },
       {
         Action = [
           "sts:AssumeRole"
         ],
         Effect   = "Allow",
-        Resource = "arn:aws:apigateway:us-east-1:${data.aws_caller_identity.current.account_id}:restapis/*"
+        Resource = "arn:aws:apigateway:${var.aws_region}:${data.aws_caller_identity.current.account_id}:restapis/*"
       }
     ]
   })

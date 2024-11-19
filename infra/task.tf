@@ -31,10 +31,6 @@ resource "aws_ecs_task_definition" "task_apipedido" {
           value = "update"
         },
         {
-          name  = "AWS_ENDPOINT_URI",
-          value = "https://sqs.us-east-1.amazonaws.com"
-        },
-        {
           name  = "AWS_ACCOUNT_ID",
           value = data.aws_caller_identity.current.account_id
         },
@@ -51,7 +47,7 @@ resource "aws_ecs_task_definition" "task_apipedido" {
         logDriver = "awslogs"
         options   = {
           awslogs-group         = aws_cloudwatch_log_group.cloudwatch-log-group.name
-          awslogs-region        = "us-east-1"
+          awslogs-region        = var.aws_region
           awslogs-stream-prefix = "ecs"
         }
       }

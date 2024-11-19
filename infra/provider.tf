@@ -14,14 +14,14 @@ terraform {
   }
 
   backend "s3" {
-    bucket = "bb-ordering-system-production"
-    key    = "bluesburguer/infra.tfstate"
-    region = "us-east-1"
+    bucket = "lanchonete-bucket"
+    key    = "lanchonete-bucket/infra.tfstate"
+    region = var.aws_region
   }
 }
 
 provider "aws" {
-  region = "us-east-1"
+  region = var.aws_region
   default_tags {
     tags = var.tags
   }

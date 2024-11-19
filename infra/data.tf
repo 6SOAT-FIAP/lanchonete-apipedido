@@ -12,9 +12,9 @@ data "aws_vpc" "existing_vpcs" {
 data "terraform_remote_state" "other_repo" {
   backend = "s3"
   config = {
-    bucket = "bb-ordering-system-production"
-    key    = "bluesburguer/database.tfstate"
-    region = "us-east-1"
+    bucket = "lanchonete-bucket"
+    key    = "database.tfstate"
+    region = "sa-east-1"
   }
 }
 
@@ -43,11 +43,11 @@ data "aws_subnet" "existing_subnet4" {
 }
 
 data "aws_db_instance" "database" {
-  db_instance_identifier = var.project_name_order-rds
+  db_instance_identifier = "lanchonete-db"
 }
 
 data "aws_vpc_endpoint" "vpc_endpoint" {
-  service_name = "com.amazonaws.us-east-1.execute-api"
+  service_name = "com.amazonaws.${var.aws_region}.execute-api"
 }
 
 data "aws_subnet" "cluster-vpc-subnet-private-1" {
