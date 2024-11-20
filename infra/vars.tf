@@ -15,3 +15,24 @@ variable "vpc_id" {
   type        = string
   default     = "vpc-060f9c0343485cb7b"
 }
+
+# Database configuration
+variable "db_username" {
+  description = "The username for the RDS instance"
+  type        = string
+  sensitive   = true
+  default     = "root"
+}
+
+variable "db_password" {
+  description = "The password for the RDS instance"
+  type        = string
+  sensitive   = true
+  default     = "rootPass123456"
+}
+
+variable "db_name" {
+  description = "Database name"
+  type        = string
+  default     = "lanchonete_produto_db"
+}
