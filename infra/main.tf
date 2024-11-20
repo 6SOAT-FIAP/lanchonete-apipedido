@@ -122,3 +122,40 @@ resource "aws_ecs_service" "api_service" {
     container_port   = 8080
   }
 }
+
+resource "aws_security_group" "lanchonete_produto_db_sg" {
+  name        = "lanchonete-produto-db-sg"
+  description = "Allow traffic to RDS instance"
+  vpc_id      = var.vpc_id
+
+  ingress {
+    from_port   = 3306
+    to_port     = 3306
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  egress {
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+}
+
+# Database
+resource "aws_db_instance" "lanchonete_database" {
+  allocated_storage    = 10
+  engine               = "mysql"
+  engine_version       = "8.0.35"
+  instance_class       = "db.t3.micro"
+  identifier           = var.db_name
+  username             = var.db_username
+  password             = var.db_password
+  db_name              = var.db_name
+  parameter_group_name = "default.mysql8.0"
+  skip_final_snapshot  = true
+  publicly_accessible  = true
+
+  vpc_security_group_ids = [aws_security_group.lanchonete_produto_db_sg.id]
+}
