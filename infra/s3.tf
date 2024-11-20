@@ -1,7 +1,7 @@
-#terraform {
-#  backend "s3" {
-#    bucket = "lanchonete-bucket"
-#    key    = "pedidoapi/terraform.tfstate"
-#    region = var.aws_region
-#  }
-#}
+terraform {
+  backend "s3" {
+    bucket = "lanchonete-deivid-bucket"
+    key    = "lanchonete-ecs-produto/terraform.tfstate"
+    region = "us-east-1"
+  }
+}
