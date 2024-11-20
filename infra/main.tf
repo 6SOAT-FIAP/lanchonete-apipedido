@@ -149,7 +149,7 @@ resource "aws_db_instance" "lanchonete_database" {
   engine               = "mysql"
   engine_version       = "8.0.35"
   instance_class       = "db.t3.micro"
-  identifier           = var.db_name
+  identifier           = var.db_identifier
   username             = var.db_username
   password             = var.db_password
   db_name              = var.db_name

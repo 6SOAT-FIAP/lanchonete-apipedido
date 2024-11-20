@@ -36,3 +36,9 @@ variable "db_name" {
   type        = string
   default     = "lanchonete_produto_db"
 }
+
+variable "db_identifier" {
+  description = "The identifier for the RDS instance"
+  type        = string
+  default     = "lanchonete-produto-db"
+}
