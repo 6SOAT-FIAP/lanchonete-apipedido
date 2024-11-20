@@ -123,8 +123,8 @@ resource "aws_ecs_service" "api_service" {
   }
 }
 
-resource "aws_security_group" "lanchonete_produto_db_sg" {
-  name        = "lanchonete-produto-db-sg"
+resource "aws_security_group" "lanchonete_pedido_db_sg" {
+  name        = "lanchonete-pedido-db-sg"
   description = "Allow traffic to RDS instance"
   vpc_id      = var.vpc_id
 
@@ -144,7 +144,7 @@ resource "aws_security_group" "lanchonete_produto_db_sg" {
 }
 
 # Database
-resource "aws_db_instance" "lanchonete_database" {
+resource "aws_db_instance" "lanchonete_pedido_database" {
   allocated_storage    = 10
   engine               = "mysql"
   engine_version       = "8.0.35"
@@ -157,5 +157,5 @@ resource "aws_db_instance" "lanchonete_database" {
   skip_final_snapshot  = true
   publicly_accessible  = true
 
-  vpc_security_group_ids = [aws_security_group.lanchonete_produto_db_sg.id]
+  vpc_security_group_ids = [aws_security_group.lanchonete_pedido_db_sg.id]
 }
