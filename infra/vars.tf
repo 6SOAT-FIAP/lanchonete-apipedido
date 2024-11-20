@@ -34,11 +34,11 @@ variable "db_password" {
 variable "db_name" {
   description = "Database name"
   type        = string
-  default     = "lanchonete_produto_db"
+  default     = "lanchonete_pedido_db"
 }
 
 variable "db_identifier" {
   description = "The identifier for the RDS instance"
   type        = string
-  default     = "lanchonete-produto-db"
+  default     = "lanchonete-pedido-db"
 }
