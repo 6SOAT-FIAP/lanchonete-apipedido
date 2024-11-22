@@ -119,9 +119,12 @@ resource "aws_lb_listener" "api_listener" {
 resource "aws_ecs_service" "api_service" {
   name            = "api-service"
   cluster         = aws_ecs_cluster.api_cluster.id
-  task_definition = aws_ecs_task_definition.api_task.arn
+  #task_definition = aws_ecs_task_definition.api_task.arn
   launch_type     = "FARGATE"
   desired_count   = 1
+  lifecycle {
+    ignore_changes = [desired_count]
+  }
 
   network_configuration {
     subnets          = var.subnet_ids
