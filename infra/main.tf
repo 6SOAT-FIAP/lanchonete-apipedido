@@ -210,6 +210,14 @@ resource "aws_api_gateway_rest_api" "rest_api" {
             type                 = "HTTP_PROXY"
             uri                  = "http://${aws_lb.api_alb.dns_name}/api/v1/pedido"
           }
+        },
+        post = {
+          x-amazon-apigateway-integration = {
+            httpMethod           = "POST"
+            payloadFormatVersion = "1.0"
+            type                 = "HTTP_PROXY"
+            uri                  = "http://${aws_lb.api_alb.dns_name}/api/v1/pedido"
+          }
         }
       }
     }
