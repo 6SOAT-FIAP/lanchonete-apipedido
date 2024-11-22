@@ -180,3 +180,64 @@ resource "aws_db_instance" "lanchonete_pedido_database" {
 
   vpc_security_group_ids = [aws_security_group.lanchonete_pedido_db_sg.id]
 }
+
+#API GATEWAY
+resource "aws_api_gateway_rest_api" "rest_api" {
+  name = "${var.project_name}-api-gateway-rest-api"
+  endpoint_configuration {
+    types = ["REGIONAL"]
+    # vpc_endpoint_ids = [data.aws_vpc_endpoint.vpc_endpoint.id]
+  }
+  body = jsonencode({
+    openapi = "3.0.1"
+    info = {
+      title   = "Pedidos"
+      version = "1.0"
+    }
+    paths = {
+      "/pedido" = {
+        get = {
+          x-amazon-apigateway-integration = {
+            httpMethod           = "GET"
+            payloadFormatVersion = "1.0"
+            type                 = "HTTP_PROXY"
+            uri                  = "http://${aws_lb.api_alb.dns_name}/api/v1/pedido"
+          }
+        }
+      }
+    }
+  })
+}
+
+resource "aws_api_gateway_deployment" "rest_api" {
+  rest_api_id = aws_api_gateway_rest_api.rest_api.id
+
+  triggers = {
+    redeployment = sha1(jsonencode(aws_api_gateway_rest_api.rest_api.body))
+  }
+
+  lifecycle {
+    create_before_destroy = true
+  }
+}
+
+resource "aws_api_gateway_stage" "rest_api" {
+  deployment_id = aws_api_gateway_deployment.rest_api.id
+  rest_api_id   = aws_api_gateway_rest_api.rest_api.id
+  stage_name    = "prod"
+}
+
+resource "aws_api_gateway_method_settings" "rest_api" {
+  rest_api_id = aws_api_gateway_rest_api.rest_api.id
+  stage_name  = aws_api_gateway_stage.rest_api.stage_name
+  method_path = "*/*"
+
+  settings {
+    metrics_enabled = false
+  }
+}
+
+resource "aws_api_gateway_vpc_link" "vpc_link" {
+  name        = "${var.project_name}-api-gateway-vpc-link"
+  target_arns = [aws_lb.api_alb.arn]
+}

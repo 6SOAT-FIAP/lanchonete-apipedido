@@ -42,3 +42,9 @@ variable "db_identifier" {
   type        = string
   default     = "lanchonete-pedido-db"
 }
+
+variable "project_name" {
+  description = "Project name"
+  type        = string
+  default     = "lanchonete-apipedidos"
+}
