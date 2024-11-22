@@ -117,11 +117,16 @@ resource "aws_lb_listener" "api_listener" {
 }
 
 resource "aws_ecs_service" "api_service" {
-  name            = "api-service"
-  cluster         = aws_ecs_cluster.api_cluster.id
-  task_definition = aws_ecs_task_definition.api_task.arn
-  launch_type     = "FARGATE"
-  desired_count   = 1
+  name                               = "api-service"
+  cluster                            = aws_ecs_cluster.api_cluster.id
+  task_definition                    = aws_ecs_task_definition.api_task.arn
+  launch_type                        = "FARGATE"
+  scheduling_strategy                = "REPLICA"
+  desired_count                      = 1
+  deployment_minimum_healthy_percent = 50
+  deployment_maximum_percent         = 200
+  wait_for_steady_state              = true
+  force_new_deployment               = true
   lifecycle {
     ignore_changes = [desired_count]
   }
