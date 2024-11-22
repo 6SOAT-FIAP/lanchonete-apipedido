@@ -88,6 +88,13 @@ resource "aws_lb" "api_alb" {
   enable_cross_zone_load_balancing = true
 }
 
+resource "aws_lb" "nlb" {
+  name               = "api-nlb"
+  internal           = false
+  load_balancer_type = "network"
+  subnets            = var.subnet_ids
+}
+
 resource "aws_lb_target_group" "api_target_group" {
   name        = "api-target-group"
   port        = 8080
@@ -190,7 +197,7 @@ resource "aws_api_gateway_rest_api" "rest_api" {
   }
   body = jsonencode({
     openapi = "3.0.1"
-    info = {
+    info    = {
       title   = "Pedidos"
       version = "1.0"
     }
@@ -239,5 +246,5 @@ resource "aws_api_gateway_method_settings" "rest_api" {
 
 resource "aws_api_gateway_vpc_link" "vpc_link" {
   name        = "${var.project_name}-api-gateway-vpc-link"
-  target_arns = [aws_lb.api_alb.arn]
+  target_arns = [aws_lb.nlb.arn]
 }
