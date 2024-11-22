@@ -1,3 +1,8 @@
+resource "aws_cloudwatch_log_group" "ecs_log_group" {
+  name              = "/ecs/api-container"
+  retention_in_days = 7
+}
+
 resource "aws_ecs_cluster" "api_cluster" {
   name = "api-cluster"
 }
@@ -19,7 +24,15 @@ resource "aws_ecs_task_definition" "api_task" {
           protocol      = "tcp"
         }
       ]
-      essential = true
+      essential        = true
+      logConfiguration = {
+        logDriver = "awslogs"
+        options   = {
+          awslogs-group         = "/ecs/api-container"
+          awslogs-region        = "us-east-1"
+          awslogs-stream-prefix = "ecs"
+        }
+      }
     }
   ])
 
