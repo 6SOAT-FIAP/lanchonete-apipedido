@@ -5,6 +5,7 @@ import org.mapstruct.Mapping;
 import org.mapstruct.Named;
 import org.mapstruct.ReportingPolicy;
 import pos.fiap.pedidos.domain.model.DadosPedido;
+import pos.fiap.pedidos.domain.model.DadosProduto;
 import pos.fiap.pedidos.domain.model.entity.Pedido;
 
 import java.time.LocalDateTime;

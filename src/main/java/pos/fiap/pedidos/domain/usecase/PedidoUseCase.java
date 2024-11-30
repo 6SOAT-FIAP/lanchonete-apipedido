@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import pos.fiap.pedidos.adapter.out.exception.RecursoNaoEncontradoException;
 import pos.fiap.pedidos.domain.model.DadosPedido;
 import pos.fiap.pedidos.domain.model.DadosProduto;
 import pos.fiap.pedidos.domain.model.entity.mapper.PedidoMapper;
@@ -29,9 +30,17 @@ public class PedidoUseCase implements PedidoUseCasePort {
     @Override
     public DadosPedido realizar(DadosPedido dadosPedido) {
         obterDadosDoProduto(dadosPedido);
+
+        if (dadosPedido.getItens().isEmpty()) {
+            throw new RecursoNaoEncontradoException("Não foram encontrados os produtos informados");
+        }
+
         var valorTotal = dadosPedido.calculaValorPedido();
+
         var pedido = pedidoMapper.fromDadosPedido(valorTotal, dadosPedido);
+
         var pedidoResponse = pedidoDbAdapterPort.cadastrarPedido(pedido);
+
         return pedidoMapper.toDadosPedido(pedidoResponse);
     }
 
@@ -41,14 +50,14 @@ public class PedidoUseCase implements PedidoUseCasePort {
         dadosPedido.getItens()
                 .forEach(dadosProduto -> {
                     final var produto = produtoAdapterPort.buscarProdutoPorId(dadosProduto.getId());
-                    produtos.add(DadosProduto.builder()
-                            .id(produto.getId())
-                            .nome(produto.getNome())
-                            .categoria(produto.getCategoria())
-                            .preco(produto.getPreco())
-                            .descricao(produto.getDescricao())
-                            .imagem(produto.getImagem())
-                            .build());
+                    produto.ifPresent(value -> produtos.add(DadosProduto.builder()
+                            .id(value.getId())
+                            .nome(value.getNome())
+                            .categoria(value.getCategoria())
+                            .preco(value.getPreco())
+                            .descricao(value.getDescricao())
+                            .imagem(value.getImagem())
+                            .build()));
                 });
 
         dadosPedido.setItens(produtos);

@@ -8,9 +8,10 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 import pos.fiap.pedidos.adapter.out.api.produto.dto.ProdutoResponseDto;
 import pos.fiap.pedidos.adapter.out.exception.HttpRequestException;
-import pos.fiap.pedidos.adapter.out.exception.PedidoNotFoundException;
 import pos.fiap.pedidos.domain.model.entity.Produto;
 import pos.fiap.pedidos.port.ProdutoAdapterPort;
+
+import java.util.Optional;
 
 import static java.util.Objects.isNull;
 import static pos.fiap.pedidos.utils.Constantes.FIM;
@@ -28,7 +29,7 @@ public class ApiProdutoAdapter implements ProdutoAdapterPort {
     private final RestTemplate restTemplate;
 
     @Override
-    public Produto buscarProdutoPorId(String id) {
+    public Optional<Produto> buscarProdutoPorId(String id) {
         try {
             log.info(String.format(STRING_LOG_FORMAT, SERVICE_NAME, OBTER_PEDIDO_POR_ID_METHOD_NAME, INICIO), id);
 
@@ -37,15 +38,15 @@ public class ApiProdutoAdapter implements ProdutoAdapterPort {
 
             if (response.getStatusCode().value() == HttpStatus.NOT_FOUND.value() || isNull(response.getBody())) {
                 log.info(String.format(STRING_LOG_FORMAT, SERVICE_NAME, OBTER_PEDIDO_POR_ID_METHOD_NAME, FIM),
-                        "Não foi encontrado pedido para o id {}", id);
-                throw new PedidoNotFoundException(String.format("Não foi encontrado pedido para o id %s", id));
+                        "Não foi encontrado produto para o id {}", id);
+                return Optional.empty();
             }
 
             var produtoResponseDto = response.getBody();
 
             var pedido = produtoResponseDto.toProduto();
             log.info(String.format(STRING_LOG_FORMAT, SERVICE_NAME, OBTER_PEDIDO_POR_ID_METHOD_NAME, FIM), pedido);
-            return pedido;
+            return Optional.of(pedido);
         } catch (Exception e) {
             log.error("Ocorreu erro ao obter o produto. ", e);
             throw new HttpRequestException("Ocorreu erro ao obter o produto. ", e);

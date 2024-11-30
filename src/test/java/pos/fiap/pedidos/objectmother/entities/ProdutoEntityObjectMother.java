@@ -1,7 +1,6 @@
 package pos.fiap.pedidos.objectmother.entities;
 
 import lombok.SneakyThrows;
-import pos.fiap.pedidos.adapter.out.database.entities.ProdutoEntity;
 import pos.fiap.pedidos.domain.enums.CategoriaEnum;
 
 public class ProdutoEntityObjectMother {
