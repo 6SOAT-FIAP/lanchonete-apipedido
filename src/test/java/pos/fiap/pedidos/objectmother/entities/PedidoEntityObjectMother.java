@@ -5,7 +5,6 @@ import pos.fiap.pedidos.domain.enums.StatusPedidoEnum;
 
 import java.util.List;
 
-import static pos.fiap.pedidos.objectmother.entities.ProdutoEntityObjectMother.getProdutoEntityMock;
 
 public class PedidoEntityObjectMother {
 
@@ -14,7 +13,7 @@ public class PedidoEntityObjectMother {
                 .numeroPedido("12342")
                 .cpfCliente("12345678")
                 .valorTotal(Double.valueOf("100.00"))
-                .itens(List.of(getProdutoEntityMock()))
+                .itens(List.of("123124"))
                 .statusPedido(StatusPedidoEnum.RECEBIDO)
                 .build();
     }
@@ -24,7 +23,7 @@ public class PedidoEntityObjectMother {
                 .numeroPedido("12342")
                 .cpfCliente("12345678")
                 .valorTotal(Double.valueOf("100.00"))
-                .itens(List.of(getProdutoEntityMock()))
+                .itens(List.of("123124"))
                 .statusPedido(StatusPedidoEnum.FINALIZADO)
                 .build();
     }
@@ -34,7 +33,7 @@ public class PedidoEntityObjectMother {
                 .numeroPedido("12342")
                 .cpfCliente("12345678")
                 .valorTotal(Double.valueOf("100.00"))
-                .itens(List.of(getProdutoEntityMock()))
+                .itens(List.of("123124"))
                 .build();
     }
 }

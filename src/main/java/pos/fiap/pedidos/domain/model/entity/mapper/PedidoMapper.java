@@ -5,6 +5,7 @@ import org.mapstruct.Mapping;
 import org.mapstruct.Named;
 import org.mapstruct.ReportingPolicy;
 import pos.fiap.pedidos.domain.model.DadosPedido;
+import pos.fiap.pedidos.domain.model.DadosProduto;
 import pos.fiap.pedidos.domain.model.entity.Pedido;
 
 import java.time.LocalDateTime;
@@ -15,9 +16,8 @@ import java.util.List;
 public interface PedidoMapper {
 
     @Mapping(target = "dadosPedido.itens")
-    @Mapping(target = "valorTotal", source = "valorTotal")
     @Mapping(target = "dataCriacao", qualifiedByName = "obterData")
-    Pedido fromDadosPedido(Double valorTotal, DadosPedido dadosPedido);
+    Pedido fromDadosPedido(DadosPedido dadosPedido);
 
     DadosPedido toDadosPedido(Pedido pedido);
 

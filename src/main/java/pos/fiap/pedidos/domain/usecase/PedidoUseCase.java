@@ -4,12 +4,17 @@ import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import pos.fiap.pedidos.adapter.out.exception.RecursoNaoEncontradoException;
 import pos.fiap.pedidos.domain.model.DadosPedido;
+import pos.fiap.pedidos.domain.model.DadosProduto;
+import pos.fiap.pedidos.domain.model.entity.Produto;
 import pos.fiap.pedidos.domain.model.entity.mapper.PedidoMapper;
 import pos.fiap.pedidos.port.PedidoDbAdapterPort;
 import pos.fiap.pedidos.port.PedidoUseCasePort;
+import pos.fiap.pedidos.port.ProdutoAdapterPort;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 import static pos.fiap.pedidos.domain.model.DadosPedido.ordenarPedidos;
@@ -21,18 +26,43 @@ public class PedidoUseCase implements PedidoUseCasePort {
 
     private final PedidoMapper pedidoMapper;
     private final PedidoDbAdapterPort pedidoDbAdapterPort;
+    private final ProdutoAdapterPort produtoAdapterPort;
 
     @Override
     public DadosPedido realizar(DadosPedido dadosPedido) {
-        var valorTotal = dadosPedido.calculaValorPedido();
-        var pedido = pedidoMapper.fromDadosPedido(valorTotal, dadosPedido);
+        final var produtos = obterDadosDoProduto(dadosPedido.getItens().stream().map(DadosProduto::getId).toList());
+
+        if (produtos.isEmpty()) {
+            throw new RecursoNaoEncontradoException("Não foram encontrados os produtos informados");
+        }
+
+        dadosPedido.calculaValorPedido(produtos);
+
+        var pedido = pedidoMapper.fromDadosPedido(dadosPedido);
+
         var pedidoResponse = pedidoDbAdapterPort.cadastrarPedido(pedido);
+
         return pedidoMapper.toDadosPedido(pedidoResponse);
     }
 
     @Override
     public List<DadosPedido> listar() {
-        var pedidos = pedidoDbAdapterPort.buscarPedidos();
+        final var pedidos = pedidoDbAdapterPort.buscarPedidos();
+
+        pedidos.forEach(pedido -> {
+            final var dadosProdutos = obterDadosDoProduto(pedido.getItens().stream().map(Produto::getId).toList());
+            pedido.setItens(dadosProdutos.stream().map(dadosProduto ->
+                    Produto.builder()
+                            .id(dadosProduto.getId())
+                            .nome(dadosProduto.getNome())
+                            .descricao(dadosProduto.getDescricao())
+                            .preco(dadosProduto.getPreco())
+                            .categoria(dadosProduto.getCategoria())
+                            .imagem(dadosProduto.getImagem())
+                            .build()
+            ).toList());
+        });
+
         var dadosPedido = pedidoMapper.toListDadosPedido(pedidos);
         return ordenarPedidos(dadosPedido);
     }
@@ -40,7 +70,19 @@ public class PedidoUseCase implements PedidoUseCasePort {
     @Override
     @SneakyThrows
     public DadosPedido obterPedidoPorId(String idPedido) {
-        var pedido = pedidoDbAdapterPort.obterPedidoPorId(idPedido);
+        final var pedido = pedidoDbAdapterPort.obterPedidoPorId(idPedido);
+        final var dadosProdutos = obterDadosDoProduto(pedido.getItens().stream().map(Produto::getId).toList());
+
+        pedido.setItens(dadosProdutos.stream().map(dadosProduto ->
+                        Produto.builder()
+                                .id(dadosProduto.getId())
+                                .nome(dadosProduto.getNome())
+                                .descricao(dadosProduto.getDescricao())
+                                .preco(dadosProduto.getPreco())
+                                .categoria(dadosProduto.getCategoria())
+                                .imagem(dadosProduto.getImagem())
+                                .build())
+                .toList());
         return pedidoMapper.toDadosPedido(pedido);
     }
 
@@ -52,6 +94,24 @@ public class PedidoUseCase implements PedidoUseCasePort {
 
         var pedidoResponse = pedidoDbAdapterPort.cadastrarPedido(pedido);
         return pedidoMapper.toDadosPedido(pedidoResponse);
+    }
+
+    private List<DadosProduto> obterDadosDoProduto(List<String> itensId) {
+        var produtos = new ArrayList<DadosProduto>();
+
+        itensId.forEach(item -> {
+            final var produto = produtoAdapterPort.buscarProdutoPorId(item);
+            produto.ifPresent(value -> produtos.add(DadosProduto.builder()
+                    .id(value.getId())
+                    .nome(value.getNome())
+                    .categoria(value.getCategoria())
+                    .preco(value.getPreco())
+                    .descricao(value.getDescricao())
+                    .imagem(value.getImagem())
+                    .build()));
+        });
+
+        return produtos;
     }
 
 }

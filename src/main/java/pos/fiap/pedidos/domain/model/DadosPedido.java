@@ -42,7 +42,8 @@ public class DadosPedido implements Serializable {
                 .toList();
     }
 
-    public Double calculaValorPedido() {
-        return itens.stream().map(DadosProduto::getPreco).reduce(0.0, Double::sum);
+    public void calculaValorPedido(List<DadosProduto> produtos) {
+        this.itens = produtos;
+        this.valorTotal = itens.stream().map(DadosProduto::getPreco).reduce(0.0, Double::sum);
     }
 }

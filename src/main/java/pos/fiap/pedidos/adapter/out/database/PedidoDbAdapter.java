@@ -36,11 +36,11 @@ public class PedidoDbAdapter implements PedidoDbAdapterPort {
         var pedidoEntity = pedidoEntityMapper.toEntity(pedido);
 
         var entity = pedidoRepository.save(pedidoEntity);
-
-        var pedidoResponse = pedidoEntityMapper.toPedido(entity);
+        pedido.setNumeroPedido(entity.getNumeroPedido());
+        pedido.setMensagemPedido("Pedido Realizado com sucesso");
 
         log.info(String.format(STRING_LOG_FORMAT, SERVICE_NAME, CADASTRAR_PEDIDO_METHOD_NAME, FIM), pedido);
-        return pedidoResponse;
+        return pedido;
     }
 
     @Override

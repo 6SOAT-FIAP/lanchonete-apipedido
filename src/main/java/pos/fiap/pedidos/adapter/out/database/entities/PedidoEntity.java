@@ -28,22 +28,10 @@ public class PedidoEntity implements Serializable {
     private String numeroPedido;
     private String cpfCliente;
     private Double valorTotal;
-
-    @Builder.Default
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
-    @JoinTable(name = "tb_pedido_produto",
-            joinColumns = {@JoinColumn(name = "numeroPedido")},
-            inverseJoinColumns = {@JoinColumn(name = "produtoId")})
-    private List<ProdutoEntity> itens = new ArrayList<>();
-
+    private List<String> itens = new ArrayList<>();
     private LocalDateTime dataCriacao;
     private LocalDateTime dataAtualizacao;
 
     @Enumerated(EnumType.STRING)
     private StatusPedidoEnum statusPedido;
-
-    @ManyToOne
-    @JsonIgnoreProperties("pedidos")
-    @JoinColumn(name = "cliente_id")
-    private ClienteEntity clienteEntity;
 }

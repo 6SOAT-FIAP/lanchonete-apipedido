@@ -193,7 +193,6 @@ resource "aws_api_gateway_rest_api" "rest_api" {
   name = "${var.project_name}-api-gateway-rest-api"
   endpoint_configuration {
     types = ["REGIONAL"]
-    # vpc_endpoint_ids = [data.aws_vpc_endpoint.vpc_endpoint.id]
   }
   body = jsonencode({
     openapi = "3.0.1"

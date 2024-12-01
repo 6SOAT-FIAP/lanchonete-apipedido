@@ -11,16 +11,16 @@ import java.io.Serial;
 import java.io.Serializable;
 import java.net.URL;
 
-@Data
-@Builder
-@Entity(name = "tb_produto")
-@AllArgsConstructor
-@NoArgsConstructor
+//@Data
+//@Builder
+//@Entity(name = "tb_produto")
+//@AllArgsConstructor
+//@NoArgsConstructor
 public class ProdutoEntity implements Serializable {
     @Serial
     private static final long serialVersionUID = 4826642502026722957L;
 
-    @Id
+//    @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private String id;
     private String nome;
