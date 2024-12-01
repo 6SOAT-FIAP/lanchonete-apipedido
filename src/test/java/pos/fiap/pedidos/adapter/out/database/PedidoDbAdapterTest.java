@@ -40,7 +40,6 @@ class PedidoDbAdapterTest {
 
         verify(pedidoRepository, times(1)).save(any(PedidoEntity.class));
         verify(pedidoEntityMapper, times(1)).toEntity(any(Pedido.class));
-        verify(pedidoEntityMapper, times(1)).toPedido(any(PedidoEntity.class));
         assertNotNull(pedido);
     }
 

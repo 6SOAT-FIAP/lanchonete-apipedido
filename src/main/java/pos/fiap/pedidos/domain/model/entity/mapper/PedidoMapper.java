@@ -16,9 +16,8 @@ import java.util.List;
 public interface PedidoMapper {
 
     @Mapping(target = "dadosPedido.itens")
-    @Mapping(target = "valorTotal", source = "valorTotal")
     @Mapping(target = "dataCriacao", qualifiedByName = "obterData")
-    Pedido fromDadosPedido(Double valorTotal, DadosPedido dadosPedido);
+    Pedido fromDadosPedido(DadosPedido dadosPedido);
 
     DadosPedido toDadosPedido(Pedido pedido);
 

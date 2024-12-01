@@ -13,8 +13,10 @@ import pos.fiap.pedidos.domain.model.DadosPedido;
 import pos.fiap.pedidos.domain.model.entity.Pedido;
 import pos.fiap.pedidos.domain.model.entity.mapper.PedidoMapper;
 import pos.fiap.pedidos.port.PedidoDbAdapterPort;
+import pos.fiap.pedidos.port.ProdutoAdapterPort;
 
 import java.util.List;
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -22,12 +24,15 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 import static pos.fiap.pedidos.objectmother.model.DadosPedidoObjectMother.getDadosPedidoMock;
 import static pos.fiap.pedidos.objectmother.model.PedidoObjectMother.getPedidoMock;
+import static pos.fiap.pedidos.objectmother.model.ProdutoObjectMother.getProdutoMock;
 
 @ExtendWith(MockitoExtension.class)
 class PedidoUseCaseTest {
 
     @Mock
     private PedidoDbAdapterPort pedidoDbAdapterPort;
+    @Mock
+    private ProdutoAdapterPort produtoAdapterPort;
     @Spy
     private PedidoMapper pedidoMapper = Mappers.getMapper(PedidoMapper.class);
     @InjectMocks
@@ -42,20 +47,25 @@ class PedidoUseCaseTest {
 
     @Test
     void givenPedido_whenRealizar_thenSucceed() {
+        when(produtoAdapterPort.buscarProdutoPorId(anyString())).thenReturn(Optional.of(getProdutoMock()));
         when(pedidoDbAdapterPort.cadastrarPedido(any(Pedido.class))).thenReturn(pedido);
 
         var dadosPedido = pedidoUseCase.realizar(getDadosPedidoMock());
 
         verify(pedidoDbAdapterPort, times(1)).cadastrarPedido(any(Pedido.class));
-        verify(pedidoMapper, times(1)).fromDadosPedido(anyDouble(), any(DadosPedido.class));
+        verify(produtoAdapterPort, times(1)).buscarProdutoPorId(anyString());
+        verify(pedidoMapper, times(1)).fromDadosPedido(any(DadosPedido.class));
         verify(pedidoMapper, times(1)).toDadosPedido(any(Pedido.class));
         assertNotNull(dadosPedido);
         assertFalse(dadosPedido.getNumeroPedido().isEmpty());
+        assertFalse(dadosPedido.getItens().isEmpty());
     }
 
     @Test
     void givenPedidos_whenListar_thenSucceed() {
         when(pedidoDbAdapterPort.buscarPedidos()).thenReturn(List.of(pedido));
+        when(produtoAdapterPort.buscarProdutoPorId(anyString()))
+                .thenReturn(Optional.ofNullable(getProdutoMock()));
 
         var pedidos = pedidoUseCase.listar();
 
@@ -68,6 +78,7 @@ class PedidoUseCaseTest {
     @Test
     void givenPedidos_whenObterPedidoPorId_thenSucceed() {
         when(pedidoDbAdapterPort.obterPedidoPorId(anyString())).thenReturn(pedido);
+        when(produtoAdapterPort.buscarProdutoPorId(anyString())).thenReturn(Optional.of(getProdutoMock()));
 
         var pedidos = pedidoUseCase.obterPedidoPorId(pedido.getNumeroPedido());
 

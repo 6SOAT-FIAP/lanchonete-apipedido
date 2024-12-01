@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import pos.fiap.pedidos.adapter.out.exception.RecursoNaoEncontradoException;
 import pos.fiap.pedidos.domain.model.DadosPedido;
 import pos.fiap.pedidos.domain.model.DadosProduto;
+import pos.fiap.pedidos.domain.model.entity.Produto;
 import pos.fiap.pedidos.domain.model.entity.mapper.PedidoMapper;
 import pos.fiap.pedidos.port.PedidoDbAdapterPort;
 import pos.fiap.pedidos.port.PedidoUseCasePort;
@@ -29,43 +30,39 @@ public class PedidoUseCase implements PedidoUseCasePort {
 
     @Override
     public DadosPedido realizar(DadosPedido dadosPedido) {
-        obterDadosDoProduto(dadosPedido);
+        final var produtos = obterDadosDoProduto(dadosPedido.getItens().stream().map(DadosProduto::getId).toList());
 
-        if (dadosPedido.getItens().isEmpty()) {
+        if (produtos.isEmpty()) {
             throw new RecursoNaoEncontradoException("Não foram encontrados os produtos informados");
         }
 
-        var valorTotal = dadosPedido.calculaValorPedido();
+        dadosPedido.calculaValorPedido(produtos);
 
-        var pedido = pedidoMapper.fromDadosPedido(valorTotal, dadosPedido);
+        var pedido = pedidoMapper.fromDadosPedido(dadosPedido);
 
         var pedidoResponse = pedidoDbAdapterPort.cadastrarPedido(pedido);
 
         return pedidoMapper.toDadosPedido(pedidoResponse);
     }
 
-    private void obterDadosDoProduto(DadosPedido dadosPedido) {
-        var produtos = new ArrayList<DadosProduto>();
-
-        dadosPedido.getItens()
-                .forEach(dadosProduto -> {
-                    final var produto = produtoAdapterPort.buscarProdutoPorId(dadosProduto.getId());
-                    produto.ifPresent(value -> produtos.add(DadosProduto.builder()
-                            .id(value.getId())
-                            .nome(value.getNome())
-                            .categoria(value.getCategoria())
-                            .preco(value.getPreco())
-                            .descricao(value.getDescricao())
-                            .imagem(value.getImagem())
-                            .build()));
-                });
-
-        dadosPedido.setItens(produtos);
-    }
-
     @Override
     public List<DadosPedido> listar() {
-        var pedidos = pedidoDbAdapterPort.buscarPedidos();
+        final var pedidos = pedidoDbAdapterPort.buscarPedidos();
+
+        pedidos.forEach(pedido -> {
+            final var dadosProdutos = obterDadosDoProduto(pedido.getItens().stream().map(Produto::getId).toList());
+            pedido.setItens(dadosProdutos.stream().map(dadosProduto ->
+                    Produto.builder()
+                            .id(dadosProduto.getId())
+                            .nome(dadosProduto.getNome())
+                            .descricao(dadosProduto.getDescricao())
+                            .preco(dadosProduto.getPreco())
+                            .categoria(dadosProduto.getCategoria())
+                            .imagem(dadosProduto.getImagem())
+                            .build()
+            ).toList());
+        });
+
         var dadosPedido = pedidoMapper.toListDadosPedido(pedidos);
         return ordenarPedidos(dadosPedido);
     }
@@ -73,7 +70,19 @@ public class PedidoUseCase implements PedidoUseCasePort {
     @Override
     @SneakyThrows
     public DadosPedido obterPedidoPorId(String idPedido) {
-        var pedido = pedidoDbAdapterPort.obterPedidoPorId(idPedido);
+        final var pedido = pedidoDbAdapterPort.obterPedidoPorId(idPedido);
+        final var dadosProdutos = obterDadosDoProduto(pedido.getItens().stream().map(Produto::getId).toList());
+
+        pedido.setItens(dadosProdutos.stream().map(dadosProduto ->
+                        Produto.builder()
+                                .id(dadosProduto.getId())
+                                .nome(dadosProduto.getNome())
+                                .descricao(dadosProduto.getDescricao())
+                                .preco(dadosProduto.getPreco())
+                                .categoria(dadosProduto.getCategoria())
+                                .imagem(dadosProduto.getImagem())
+                                .build())
+                .toList());
         return pedidoMapper.toDadosPedido(pedido);
     }
 
@@ -85,6 +94,24 @@ public class PedidoUseCase implements PedidoUseCasePort {
 
         var pedidoResponse = pedidoDbAdapterPort.cadastrarPedido(pedido);
         return pedidoMapper.toDadosPedido(pedidoResponse);
+    }
+
+    private List<DadosProduto> obterDadosDoProduto(List<String> itensId) {
+        var produtos = new ArrayList<DadosProduto>();
+
+        itensId.forEach(item -> {
+            final var produto = produtoAdapterPort.buscarProdutoPorId(item);
+            produto.ifPresent(value -> produtos.add(DadosProduto.builder()
+                    .id(value.getId())
+                    .nome(value.getNome())
+                    .categoria(value.getCategoria())
+                    .preco(value.getPreco())
+                    .descricao(value.getDescricao())
+                    .imagem(value.getImagem())
+                    .build()));
+        });
+
+        return produtos;
     }
 
 }

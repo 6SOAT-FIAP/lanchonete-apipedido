@@ -4,8 +4,6 @@ import pos.fiap.pedidos.adapter.in.api.dto.PedidoRequestDto;
 
 import java.util.List;
 
-import static pos.fiap.pedidos.domain.enums.CategoriaEnum.ACOMPANHAMENTO;
-
 public class PedidoRequestDtoObjectMother {
 
     public static PedidoRequestDto getPedidoRequestDtoMock() {
@@ -18,10 +16,6 @@ public class PedidoRequestDtoObjectMother {
     private static PedidoRequestDto.WrapperProdutoRequestDto getWrapperProdutoRequestDtoMock() {
         return PedidoRequestDto.WrapperProdutoRequestDto.builder()
                 .id("13541")
-                .nome("Pedido Teste")
-                .categoria(ACOMPANHAMENTO)
-                .preco(Double.valueOf("100.00"))
-                .descricao("Pedido de teste")
                 .build();
     }
 }
