@@ -4,17 +4,19 @@ import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import pos.fiap.pedidos.adapter.out.api.produto.dto.ProdutoResponseDto;
 import pos.fiap.pedidos.adapter.out.exception.RecursoNaoEncontradoException;
+import pos.fiap.pedidos.domain.enums.CategoriaEnum;
 import pos.fiap.pedidos.domain.model.DadosPedido;
 import pos.fiap.pedidos.domain.model.DadosProduto;
 import pos.fiap.pedidos.domain.model.entity.Produto;
 import pos.fiap.pedidos.domain.model.entity.mapper.PedidoMapper;
+import pos.fiap.pedidos.port.PagamentoAdapterPort;
 import pos.fiap.pedidos.port.PedidoDbAdapterPort;
 import pos.fiap.pedidos.port.PedidoUseCasePort;
 import pos.fiap.pedidos.port.ProdutoAdapterPort;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 
 import static pos.fiap.pedidos.domain.model.DadosPedido.ordenarPedidos;
@@ -27,6 +29,7 @@ public class PedidoUseCase implements PedidoUseCasePort {
     private final PedidoMapper pedidoMapper;
     private final PedidoDbAdapterPort pedidoDbAdapterPort;
     private final ProdutoAdapterPort produtoAdapterPort;
+    private final PagamentoAdapterPort pagamentoAdapterPort;
 
     @Override
     public DadosPedido realizar(DadosPedido dadosPedido) {
@@ -41,6 +44,10 @@ public class PedidoUseCase implements PedidoUseCasePort {
         var pedido = pedidoMapper.fromDadosPedido(dadosPedido);
 
         var pedidoResponse = pedidoDbAdapterPort.cadastrarPedido(pedido);
+
+        var qrCode = pagamentoAdapterPort.realizarPagamento(pedidoResponse);
+
+        // mapear qrcode para response
 
         return pedidoMapper.toDadosPedido(pedidoResponse);
     }
@@ -97,21 +104,24 @@ public class PedidoUseCase implements PedidoUseCasePort {
     }
 
     private List<DadosProduto> obterDadosDoProduto(List<String> itensId) {
-        var produtos = new ArrayList<DadosProduto>();
+        try {
+            String idsParam = String.join("&ids=", itensId);
 
-        itensId.forEach(item -> {
-            final var produto = produtoAdapterPort.buscarProdutoPorId(item);
-            produto.ifPresent(value -> produtos.add(DadosProduto.builder()
-                    .id(value.getId())
-                    .nome(value.getNome())
-                    .categoria(value.getCategoria())
-                    .preco(value.getPreco())
-                    .descricao(value.getDescricao())
-                    .imagem(value.getImagem())
-                    .build()));
-        });
+            List<ProdutoResponseDto> response = produtoAdapterPort.buscarProdutosPorIds(idsParam);
 
-        return produtos;
+            return response.stream()
+                    .map(produto -> DadosProduto.builder()
+                            .id(produto.getId())
+                            .nome(produto.getNome())
+                            .categoria(CategoriaEnum.valueOf(produto.getCategoria()))
+                            .preco(produto.getPreco())
+                            .descricao(produto.getDescricao())
+                            .imagem(produto.getImagem())
+                            .build())
+                    .toList();
+        } catch (Exception e) {
+            log.error("Erro ao obter dados dos produtos", e);
+            throw new RuntimeException("Erro ao obter dados dos produtos", e);
+        }
     }
-
 }

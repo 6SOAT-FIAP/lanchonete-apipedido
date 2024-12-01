@@ -1,10 +1,9 @@
 package pos.fiap.pedidos.port;
 
-import pos.fiap.pedidos.domain.model.entity.Produto;
+import pos.fiap.pedidos.adapter.out.api.produto.dto.ProdutoResponseDto;
 
-import java.util.Optional;
+import java.util.List;
 
 public interface ProdutoAdapterPort {
-
-    Optional<Produto> buscarProdutoPorId(String id);
+    List<ProdutoResponseDto> buscarProdutosPorIds(String idsParam);
 }

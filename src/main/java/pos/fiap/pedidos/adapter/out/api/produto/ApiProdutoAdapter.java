@@ -3,15 +3,16 @@ package pos.fiap.pedidos.adapter.out.api.produto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.ParameterizedTypeReference;
+import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 import pos.fiap.pedidos.adapter.out.api.produto.dto.ProdutoResponseDto;
 import pos.fiap.pedidos.adapter.out.exception.HttpRequestException;
-import pos.fiap.pedidos.domain.model.entity.Produto;
 import pos.fiap.pedidos.port.ProdutoAdapterPort;
 
-import java.util.Optional;
+import java.util.List;
 
 import static java.util.Objects.isNull;
 import static pos.fiap.pedidos.utils.Constantes.FIM;
@@ -29,27 +30,29 @@ public class ApiProdutoAdapter implements ProdutoAdapterPort {
     private final RestTemplate restTemplate;
 
     @Override
-    public Optional<Produto> buscarProdutoPorId(String id) {
+    public List<ProdutoResponseDto> buscarProdutosPorIds(String idsParam) {
         try {
-            log.info(String.format(STRING_LOG_FORMAT, SERVICE_NAME, OBTER_PEDIDO_POR_ID_METHOD_NAME, INICIO), id);
+            log.info(String.format(STRING_LOG_FORMAT, SERVICE_NAME, "buscarProdutosPorIds", INICIO), idsParam);
 
-            var response = restTemplate.getForEntity(urlPedido.concat(String.format("/%s", id)),
-                    ProdutoResponseDto.class);
+            var response = restTemplate.exchange(
+                    urlPedido.concat(String.format("/?ids=%s", idsParam)),
+                    HttpMethod.GET,
+                    null,
+                    new ParameterizedTypeReference<List<ProdutoResponseDto>>() {}
+            );
 
             if (response.getStatusCode().value() == HttpStatus.NOT_FOUND.value() || isNull(response.getBody())) {
-                log.info(String.format(STRING_LOG_FORMAT, SERVICE_NAME, OBTER_PEDIDO_POR_ID_METHOD_NAME, FIM),
-                        "Não foi encontrado produto para o id {}", id);
-                return Optional.empty();
+                log.info(String.format(STRING_LOG_FORMAT, SERVICE_NAME, "buscarProdutosPorIds", FIM),
+                        "Nenhum produto encontrado para os IDs {}", idsParam);
+                return List.of();
             }
 
-            var produtoResponseDto = response.getBody();
-
-            var pedido = produtoResponseDto.toProduto();
-            log.info(String.format(STRING_LOG_FORMAT, SERVICE_NAME, OBTER_PEDIDO_POR_ID_METHOD_NAME, FIM), pedido);
-            return Optional.of(pedido);
+            List<ProdutoResponseDto> produtos = response.getBody();
+            log.info(String.format(STRING_LOG_FORMAT, SERVICE_NAME, "buscarProdutosPorIds", FIM), produtos);
+            return produtos;
         } catch (Exception e) {
-            log.error("Ocorreu erro ao obter o produto. ", e);
-            throw new HttpRequestException("Ocorreu erro ao obter o produto. ", e);
+            log.error("Erro ao buscar produtos", e);
+            throw new HttpRequestException("Erro ao buscar produtos", e);
         }
     }
 }
