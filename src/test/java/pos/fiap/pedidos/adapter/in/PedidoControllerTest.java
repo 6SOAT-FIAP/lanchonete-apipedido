@@ -21,9 +21,9 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static pos.fiap.pedidos.objectmother.dtos.in.PedidoRequestDtoObjectMother.getPedidoRequestDtoMock;
-import static pos.fiap.pedidos.objectmother.dtos.in.PedidoResponseDtoObjectMother.getPedidoResponseDtoMock;
-import static pos.fiap.pedidos.objectmother.model.DadosPedidoObjectMother.getDadosPedidoMock;
+import static pos.fiap.pedidos.objectmother.DadosPedidoObjectMother.getDadosPedidoMock;
+import static pos.fiap.pedidos.objectmother.PedidoObjectMother.getPedidoRequestDtoMock;
+import static pos.fiap.pedidos.objectmother.PedidoObjectMother.getPedidoResponseDtoMock;
 import static pos.fiap.pedidos.utils.JsonStringUtils.asJsonString;
 
 @WebMvcTest(PedidoController.class)

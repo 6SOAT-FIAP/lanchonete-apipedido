@@ -12,19 +12,19 @@ import pos.fiap.pedidos.domain.enums.StatusPedidoEnum;
 import pos.fiap.pedidos.domain.model.DadosPedido;
 import pos.fiap.pedidos.domain.model.entity.Pedido;
 import pos.fiap.pedidos.domain.model.entity.mapper.PedidoMapper;
+import pos.fiap.pedidos.port.PagamentoAdapterPort;
 import pos.fiap.pedidos.port.PedidoDbAdapterPort;
 import pos.fiap.pedidos.port.ProdutoAdapterPort;
 
 import java.util.List;
-import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
-import static pos.fiap.pedidos.objectmother.model.DadosPedidoObjectMother.getDadosPedidoMock;
-import static pos.fiap.pedidos.objectmother.model.PedidoObjectMother.getPedidoMock;
-import static pos.fiap.pedidos.objectmother.model.ProdutoObjectMother.getProdutoMock;
+import static pos.fiap.pedidos.objectmother.DadosPedidoObjectMother.getDadosPedidoMock;
+import static pos.fiap.pedidos.objectmother.PedidoObjectMother.getPedidoMock;
+import static pos.fiap.pedidos.objectmother.ProdutoObjectMother.getProdutoResponseDtoMock;
 
 @ExtendWith(MockitoExtension.class)
 class PedidoUseCaseTest {
@@ -33,6 +33,8 @@ class PedidoUseCaseTest {
     private PedidoDbAdapterPort pedidoDbAdapterPort;
     @Mock
     private ProdutoAdapterPort produtoAdapterPort;
+    @Mock
+    private PagamentoAdapterPort pagamentoAdapterPort;
     @Spy
     private PedidoMapper pedidoMapper = Mappers.getMapper(PedidoMapper.class);
     @InjectMocks
@@ -47,13 +49,14 @@ class PedidoUseCaseTest {
 
     @Test
     void givenPedido_whenRealizar_thenSucceed() {
-        when(produtoAdapterPort.buscarProdutoPorId(anyString())).thenReturn(Optional.of(getProdutoMock()));
+        when(produtoAdapterPort.buscarProdutosPorIds(anyString())).thenReturn(List.of(getProdutoResponseDtoMock()));
         when(pedidoDbAdapterPort.cadastrarPedido(any(Pedido.class))).thenReturn(pedido);
+        when(pagamentoAdapterPort.realizarPagamento(any(Pedido.class))).thenReturn("qrCodeString");
 
         var dadosPedido = pedidoUseCase.realizar(getDadosPedidoMock());
 
         verify(pedidoDbAdapterPort, times(1)).cadastrarPedido(any(Pedido.class));
-        verify(produtoAdapterPort, times(1)).buscarProdutoPorId(anyString());
+        verify(produtoAdapterPort, times(1)).buscarProdutosPorIds(anyString());
         verify(pedidoMapper, times(1)).fromDadosPedido(any(DadosPedido.class));
         verify(pedidoMapper, times(1)).toDadosPedido(any(Pedido.class));
         assertNotNull(dadosPedido);
@@ -64,8 +67,7 @@ class PedidoUseCaseTest {
     @Test
     void givenPedidos_whenListar_thenSucceed() {
         when(pedidoDbAdapterPort.buscarPedidos()).thenReturn(List.of(pedido));
-        when(produtoAdapterPort.buscarProdutoPorId(anyString()))
-                .thenReturn(Optional.ofNullable(getProdutoMock()));
+        when(produtoAdapterPort.buscarProdutosPorIds(anyString())).thenReturn(List.of(getProdutoResponseDtoMock()));
 
         var pedidos = pedidoUseCase.listar();
 
@@ -78,7 +80,7 @@ class PedidoUseCaseTest {
     @Test
     void givenPedidos_whenObterPedidoPorId_thenSucceed() {
         when(pedidoDbAdapterPort.obterPedidoPorId(anyString())).thenReturn(pedido);
-        when(produtoAdapterPort.buscarProdutoPorId(anyString())).thenReturn(Optional.of(getProdutoMock()));
+        when(produtoAdapterPort.buscarProdutosPorIds(anyString())).thenReturn(List.of(getProdutoResponseDtoMock()));
 
         var pedidos = pedidoUseCase.obterPedidoPorId(pedido.getNumeroPedido());
 

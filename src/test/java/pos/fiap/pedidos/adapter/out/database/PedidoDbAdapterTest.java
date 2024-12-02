@@ -19,8 +19,7 @@ import java.util.Optional;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
-import static pos.fiap.pedidos.objectmother.entities.PedidoEntityObjectMother.*;
-import static pos.fiap.pedidos.objectmother.model.PedidoObjectMother.getPedidoMock;
+import static pos.fiap.pedidos.objectmother.PedidoObjectMother.*;
 
 @ExtendWith(MockitoExtension.class)
 class PedidoDbAdapterTest {
