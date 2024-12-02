@@ -23,7 +23,7 @@ import static pos.fiap.pedidos.utils.Constantes.INICIO;
 @RequiredArgsConstructor
 public class ApiProdutoAdapter implements ProdutoAdapterPort {
     private static final String SERVICE_NAME = "ApiProdutoAdapter";
-    private static final String OBTER_PEDIDO_POR_ID_METHOD_NAME = "obterPedidoPorId";
+    private static final String BUSCAR_PRODUTOS_POR_ID_METHOD = "buscarProdutosPorIds";
     private static final String STRING_LOG_FORMAT = "%s_%s_%s {}";
     @Value("${api.produto.url}")
     private String urlPedido;
@@ -32,23 +32,24 @@ public class ApiProdutoAdapter implements ProdutoAdapterPort {
     @Override
     public List<ProdutoResponseDto> buscarProdutosPorIds(String idsParam) {
         try {
-            log.info(String.format(STRING_LOG_FORMAT, SERVICE_NAME, "buscarProdutosPorIds", INICIO), idsParam);
+            log.info(String.format(STRING_LOG_FORMAT, SERVICE_NAME, BUSCAR_PRODUTOS_POR_ID_METHOD, INICIO), idsParam);
 
             var response = restTemplate.exchange(
                     urlPedido.concat(String.format("/?ids=%s", idsParam)),
                     HttpMethod.GET,
                     null,
-                    new ParameterizedTypeReference<List<ProdutoResponseDto>>() {}
+                    new ParameterizedTypeReference<List<ProdutoResponseDto>>() {
+                    }
             );
 
             if (response.getStatusCode().value() == HttpStatus.NOT_FOUND.value() || isNull(response.getBody())) {
-                log.info(String.format(STRING_LOG_FORMAT, SERVICE_NAME, "buscarProdutosPorIds", FIM),
+                log.info(String.format(STRING_LOG_FORMAT, SERVICE_NAME, BUSCAR_PRODUTOS_POR_ID_METHOD, FIM),
                         "Nenhum produto encontrado para os IDs {}", idsParam);
                 return List.of();
             }
 
             List<ProdutoResponseDto> produtos = response.getBody();
-            log.info(String.format(STRING_LOG_FORMAT, SERVICE_NAME, "buscarProdutosPorIds", FIM), produtos);
+            log.info(String.format(STRING_LOG_FORMAT, SERVICE_NAME, BUSCAR_PRODUTOS_POR_ID_METHOD, FIM), produtos);
             return produtos;
         } catch (Exception e) {
             log.error("Erro ao buscar produtos", e);

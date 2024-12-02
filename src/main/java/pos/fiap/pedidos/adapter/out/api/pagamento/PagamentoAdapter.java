@@ -1,23 +1,22 @@
-package pos.fiap.pedidos.adapter.out.pagamento;
+package pos.fiap.pedidos.adapter.out.api.pagamento;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
-import pos.fiap.pedidos.adapter.out.pagamento.dto.PagamentoRequestDto;
-import pos.fiap.pedidos.adapter.out.pagamento.dto.PagamentoResponseDto;
+import pos.fiap.pedidos.adapter.out.api.pagamento.dto.PagamentoRequestDto;
+import pos.fiap.pedidos.adapter.out.api.pagamento.dto.PagamentoResponseDto;
 import pos.fiap.pedidos.domain.model.entity.Pedido;
 import pos.fiap.pedidos.port.PagamentoAdapterPort;
 
 @Component
 @RequiredArgsConstructor
 public class PagamentoAdapter implements PagamentoAdapterPort {
-
+    @Value("${api.pagamento.url}")
+    private String urlPagamento;
     private final RestTemplate restTemplate;
-
-    // mover para properties
-    private static final String PAGAMENTO_URL = "http://localhost:8080/api/v1/pagamento";
 
     @Override
     public String realizarPagamento(Pedido pedido) {
@@ -26,7 +25,7 @@ public class PagamentoAdapter implements PagamentoAdapterPort {
         try {
             HttpEntity<PagamentoRequestDto> request = new HttpEntity<>(pagamentoRequest);
             ResponseEntity<PagamentoResponseDto> response = restTemplate.postForEntity(
-                    PAGAMENTO_URL, request, PagamentoResponseDto.class);
+                    urlPagamento, request, PagamentoResponseDto.class);
 
             if (!response.getStatusCode().is2xxSuccessful()) {
                 throw new RuntimeException("Erro ao processar pagamento: " + response.getStatusCode());

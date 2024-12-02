@@ -1,4 +1,4 @@
-package pos.fiap.pedidos.objectmother.model;
+package pos.fiap.pedidos.objectmother;
 
 import pos.fiap.pedidos.domain.model.DadosProduto;
 

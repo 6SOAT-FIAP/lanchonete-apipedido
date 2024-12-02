@@ -4,8 +4,6 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Builder;
 import lombok.Data;
-import pos.fiap.pedidos.domain.enums.CategoriaEnum;
-import pos.fiap.pedidos.domain.model.entity.Produto;
 
 import java.io.Serial;
 import java.io.Serializable;
@@ -24,15 +22,4 @@ public class ProdutoResponseDto implements Serializable {
     private Double preco;
     private String descricao;
     private URL imagem;
-
-    public Produto toProduto() {
-        return Produto.builder()
-                .id(this.id)
-                .nome(this.nome)
-                .categoria(CategoriaEnum.valueOf(this.categoria))
-                .preco(this.preco)
-                .descricao(this.descricao)
-                .imagem(this.imagem)
-                .build();
-    }
 }

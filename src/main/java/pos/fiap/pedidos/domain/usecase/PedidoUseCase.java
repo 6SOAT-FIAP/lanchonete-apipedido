@@ -42,14 +42,13 @@ public class PedidoUseCase implements PedidoUseCasePort {
         dadosPedido.calculaValorPedido(produtos);
 
         var pedido = pedidoMapper.fromDadosPedido(dadosPedido);
+        pedido = pedidoDbAdapterPort.cadastrarPedido(pedido);
 
-        var pedidoResponse = pedidoDbAdapterPort.cadastrarPedido(pedido);
+        var qrCode = pagamentoAdapterPort.realizarPagamento(pedido);
 
-        var qrCode = pagamentoAdapterPort.realizarPagamento(pedidoResponse);
-
-        // mapear qrcode para response
-
-        return pedidoMapper.toDadosPedido(pedidoResponse);
+        var retornoDadosPedido = pedidoMapper.toDadosPedido(pedido);
+        retornoDadosPedido.setQrCode(qrCode);
+        return retornoDadosPedido;
     }
 
     @Override
@@ -113,7 +112,7 @@ public class PedidoUseCase implements PedidoUseCasePort {
                     .map(produto -> DadosProduto.builder()
                             .id(produto.getId())
                             .nome(produto.getNome())
-                            .categoria(CategoriaEnum.valueOf(produto.getCategoria()))
+                            .categoria(CategoriaEnum.from(produto.getCategoria()).get())
                             .preco(produto.getPreco())
                             .descricao(produto.getDescricao())
                             .imagem(produto.getImagem())

@@ -1,4 +1,4 @@
-package pos.fiap.pedidos.adapter.out.pagamento.dto;
+package pos.fiap.pedidos.adapter.out.api.pagamento.dto;
 
 import lombok.Builder;
 import lombok.Data;

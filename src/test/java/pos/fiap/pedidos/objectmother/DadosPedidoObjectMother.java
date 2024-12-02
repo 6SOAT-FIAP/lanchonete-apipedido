@@ -1,10 +1,10 @@
-package pos.fiap.pedidos.objectmother.model;
+package pos.fiap.pedidos.objectmother;
 
 import pos.fiap.pedidos.domain.model.DadosPedido;
 
 import java.util.List;
 
-import static pos.fiap.pedidos.objectmother.model.DadosProdutoObjectMother.getDadosProdutoMock;
+import static pos.fiap.pedidos.objectmother.DadosProdutoObjectMother.getDadosProdutoMock;
 
 public class DadosPedidoObjectMother {
 
