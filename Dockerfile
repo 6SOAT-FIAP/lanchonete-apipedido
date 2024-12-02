@@ -21,7 +21,7 @@ COPY --from=builder /app/target/lanchonete-apipedido-0.0.1-SNAPSHOT.jar .
 COPY --from=builder /app/target/*.properties .
 
 # Expondo a porta que o aplicativo está ouvindo
-EXPOSE 8080
+EXPOSE 8082
 
 # Comando para iniciar o aplicativo
 CMD ["java", "-jar", "lanchonete-apipedido-0.0.1-SNAPSHOT.jar"]
