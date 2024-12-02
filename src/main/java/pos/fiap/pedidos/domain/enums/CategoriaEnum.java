@@ -29,7 +29,7 @@ public enum CategoriaEnum {
 
     public static Optional<CategoriaEnum> from(String status) {
         return Stream.of(CategoriaEnum.values())
-                .filter(s -> s.getName().equals(status))
+                .filter(s -> s.getName().equalsIgnoreCase(status))
                 .findFirst();
     }
 }

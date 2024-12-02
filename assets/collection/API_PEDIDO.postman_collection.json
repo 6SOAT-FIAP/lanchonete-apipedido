@@ -1,0 +1,193 @@
+{
+	"info": {
+		"_postman_id": "4ee6d0be-892f-43f6-9fbe-511eafac103b",
+		"name": "API_PEDIDO",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "31739777"
+	},
+	"item": [
+		{
+			"name": "Local",
+			"item": [
+				{
+					"name": "Checkout dos pedidos",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n\t\"cpfCliente\": \"1425\",\r\n\t\"itens\": [\r\n        {\r\n            \"id\": \"1\"\r\n        }\r\n\t]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8082/api/v1/pedido",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8082",
+							"path": [
+								"api",
+								"v1",
+								"pedido"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Listar pedidos",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8082/api/v1/pedido",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8082",
+							"path": [
+								"api",
+								"v1",
+								"pedido"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Atualizar pedido",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"statusPedido\": \"FINALIZADO\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8082/api/v1/pedido/59e3a9f2-e52e-4bbe-849c-3581688609fb",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8082",
+							"path": [
+								"api",
+								"v1",
+								"pedido",
+								"59e3a9f2-e52e-4bbe-849c-3581688609fb"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "AWS",
+			"item": [
+				{
+					"name": "Checkout dos pedidos",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n\t\"cpfCliente\": \"1425\",\r\n\t\"itens\": [\r\n        {\r\n            \"id\": \"1\"\r\n        }\r\n\t]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://lanchonete-alb-436522991.us-east-1.elb.amazonaws.com/api/v1/pedido",
+							"protocol": "http",
+							"host": [
+								"lanchonete-alb-436522991",
+								"us-east-1",
+								"elb",
+								"amazonaws",
+								"com"
+							],
+							"path": [
+								"api",
+								"v1",
+								"pedido"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Listar pedidos",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://lanchonete-alb-436522991.us-east-1.elb.amazonaws.com/api/v1/pedido",
+							"protocol": "http",
+							"host": [
+								"lanchonete-alb-436522991",
+								"us-east-1",
+								"elb",
+								"amazonaws",
+								"com"
+							],
+							"path": [
+								"api",
+								"v1",
+								"pedido"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Atualizar pedido",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"statusPedido\": \"FINALIZADO\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://lanchonete-alb-436522991.us-east-1.elb.amazonaws.com/api/v1/pedido/59e3a9f2-e52e-4bbe-849c-3581688609fb",
+							"protocol": "http",
+							"host": [
+								"lanchonete-alb-436522991",
+								"us-east-1",
+								"elb",
+								"amazonaws",
+								"com"
+							],
+							"path": [
+								"api",
+								"v1",
+								"pedido",
+								"59e3a9f2-e52e-4bbe-849c-3581688609fb"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
